@@ -3,7 +3,12 @@ module.exports = {
         "./src/**/*.{js,jsx,ts,tsx}"
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                'game': ['"Press Start 2P"', 'cursive'], 
+                'mono': ['"Kode Mono"', 'monospace'],
+            }
+        },
     },
     plugins: [],
 }
