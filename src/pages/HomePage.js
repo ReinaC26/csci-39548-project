@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 
 function HomePage() {
+    const [displayText, setDisplayText] = useState('');
+    const [showCursor, setShowCursor] = useState(true);
+    const fullText = 'Welcome to SerendiQuest.'
+
+    useEffect(() => {
+        let index = 0;
+        const typingInterval = setInterval(() => {
+            if (index < fullText.length) {
+                
+                setDisplayText(fullText.substring(0, index + 1));
+                index++
+            } else {
+                clearInterval(typingInterval);
+            }
+        }, 100);
+        return () => clearInterval(typingInterval);
+    }, []);
+
+    useEffect(() => {
+        const cursorInterval = setInterval(() => {
+            setShowCursor(prev => !prev);
+        }, 500)
+        return () => clearInterval(cursorInterval);
+    }, []);
+
     return (
         <div className='min-h-screen bg-black'>
             {/* NAVIGATION BAR */}
@@ -23,6 +48,14 @@ function HomePage() {
                     </div>
                 </div>
             </nav>
+
+            {/* Typewriter Text: */}
+            <div className='flex items-center justify-center h-[calc(100vh-80px)]'>
+                <h1 className='text-4xl font-game text-green-400'>
+                    {displayText}
+                    <span className={showCursor ? 'opacity-100' : 'opacity-0'}>|</span>
+                </h1>
+            </div>
         </div>
     );
 }
