@@ -13,14 +13,12 @@
     padding: 0 2.5rem;
 }
 
-/* Navbar links container */
 .nav-links {
     display: flex;
     gap: 3rem;
     font-family: 'Kode Mono', monospace;
 }
 
-/* Navbar link style */
 .nav-links a {
     color: white;
     text-decoration: none;

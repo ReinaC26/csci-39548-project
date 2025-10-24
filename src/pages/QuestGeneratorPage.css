@@ -1,0 +1,10 @@
+.generator-page{
+    min-height: 100vh;
+    background-color: #78A2B0;
+}
+.page-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
