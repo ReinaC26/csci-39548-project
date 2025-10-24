@@ -42,7 +42,9 @@ function HomePage() {
             <div className="page-content">
                 <p>Your adventure awaits...</p>
             </div>
-            <button className="page-button">Generate Adventure</button>
+            <a href="/questgenerator" className="page-button">
+                Generate Adventure
+            </a>
         </div>
     );
 }

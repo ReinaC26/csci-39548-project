@@ -36,7 +36,8 @@
     font-size: 1.5rem;
     font-family: 'Kode Mono', monospace;
     color: white;
-    padding: 2rem 1rem; /* add spacing */
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .page-button{
