@@ -1,0 +1,54 @@
+.homepage {
+    min-height: 100vh;
+    background-color: #1d1d1d;
+}
+
+/* Typewriter text container */
+.typewriter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25vh;
+    height: 45px;
+}
+
+/* Typewriter text */
+.typewriter-text {
+    font-size: 2.25rem;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    color: white;
+}
+
+/* Blinking cursor */
+.cursor {
+    transition: opacity 0.2s;
+}
+.cursor.hidden {
+    opacity: 0;
+}
+.cursor.visible {
+    opacity: 1;
+}
+
+/* Page content below typewriter */
+.page-content {
+    font-size: 1.5rem;
+    font-family: 'Kode Mono', monospace;
+    color: white;
+    padding: 2rem 1rem; /* add spacing */
+}
+
+.page-button{
+    background-color: #C0DBE4;
+    color: black;
+    border: none;
+    padding: 1.25rem 2.5rem; 
+    font-size: 1.5rem;      
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 3px 3px 2px rgba(169, 169, 169, 0.88);
+    transition: background-color 0.2s ease-in-out;
+}
