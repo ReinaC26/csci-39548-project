@@ -1,0 +1,217 @@
+.generator-page{
+    min-height: 100vh;
+    background-color: #1d1d1d;
+}
+.page-container{
+    display: flex;
+    height: 89vh;
+    width: 99vw;
+    background-color: #78A2B0;
+    flex-direction: row;
+    padding: 0.8rem 0.8rem;   
+    border-radius: 15px;
+    margin: auto;
+}
+.left-container{
+    display: flex;
+    background-color: #C0DBE4;
+    flex-direction: column;
+    width: 45%;
+    height: 85vh;
+    padding: 0.8rem;
+    border-radius: 15px;
+    box-shadow: 3px 3px 6px 3px rgba(97, 97, 97, 0.5);
+}
+.right-container{
+    display: flex;
+    background-color: #202020;
+    flex-direction: column;
+    width: 55%;
+    height: 85vh;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 3px 2px 6px 3px rgba(97, 97, 97, 0.5);
+    margin-left: 1rem;
+}
+.left-title{
+    font-size: 1.5rem;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    color: #0B556C;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Random Mode Display */
+.random-mode{
+    display: flex;
+    height: 9vh;
+    width: 20vw;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 9.5rem;
+    margin-bottom: 0.8rem;
+    border-radius: 15px;
+    background-color: #0B556C;
+    gap: 2rem;
+}
+.text-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 0.5vw;
+}
+.random-mode .bold-text{
+    font-size: 1rem;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    color: white;
+    margin-left: 1rem;
+}
+.random-mode .regular-text{
+    font-size: 0.7rem;
+    font-family: 'Kode Mono', monospace;
+    color: white;
+    margin-left: 1rem;
+}
+.mode-selection-button{
+    background-color: white;
+    height: 20px;
+    width: 20px;
+}
+
+/* Distance and Duration */
+.distance,.duration{
+    display: flex;
+    font-family: 'Kode Mono', monospace;
+    color: #0B556C;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    gap: 1rem;
+}
+.distance .input-box{
+    display: flex;
+    background-color: white;
+    text-align: center;
+    height: 30px;
+    width: 90px;
+    border-radius: 5px;
+}
+
+.duration .input-box{
+    display: flex;
+    background-color: white;
+    text-align: center;
+    height: 30px;
+    width: 140px;
+    border-radius: 5px;
+}
+
+/* slider bar */
+.customize-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%; 
+    height: 1.2rem;
+    cursor: pointer;
+    margin-left: 1rem; 
+    margin-bottom: 0.8rem;
+    border-radius: 100px;
+}
+
+/* white bar */
+.customize-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 1rem; 
+}
+
+.customize-slider::-moz-range-track {
+    width: 100%;
+    height: 1rem; 
+}
+
+/* blue slider */
+.customize-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #0B556C;
+    height: 1.8rem;
+    width: 1rem;
+    border-radius: 0.5rem;
+    margin-top: calc(0.75rem - 1.2rem); 
+}
+
+.customize-slider::-moz-range-thumb {
+    background: #0B556C;
+    height: 2.5rem;
+    width: 1rem;
+    border: none; 
+    border-radius: 0.5rem;
+}
+
+/* Customize locations */
+.start-location,.end-location{
+    display: flex;
+    font-family: 'Kode Mono', monospace;
+    color: #0B556C;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    gap: 1rem;
+}
+
+.start-location-input-box{
+    display: flex;
+    background-color: white;
+    border: #C0DBE4;
+    font-size: 12px;
+    text-align: left;
+    height: 30px;
+    width: 37vw;
+    border-radius: 5px;
+    margin-left: 2rem;
+    margin-bottom: 0.8rem;
+}
+
+.end-location-input-box{
+    display: flex;
+    background-color: white;
+    border: #C0DBE4;
+    font-size: 12px;
+    text-align: left;
+    height: 30px;
+    width: 37vw;
+    border-radius: 5px;
+    margin-left: 2rem;
+    margin-bottom: 0.8rem;
+}
+
+.description-input-box {
+    background-color: white;
+    border: #C0DBE4;
+    font-size: 12px;
+    height: 60px;
+    width: 37vw;
+    border-radius: 5px;
+    margin-left: 2rem;
+    padding: 8px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.description-input-box textarea {
+    width: 100%;
+    height: 100%;
+    border: #C0DBE4;
+    outline: none;
+    resize: none;
+    font-size: 12px;
+    font-family: 'Kode Mono', monospace;
+    background: transparent;
+    color: black;
+}
