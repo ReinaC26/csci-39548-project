@@ -9,11 +9,11 @@ function ProfilePage() {
             <Navbar />
             <div className='profile-container'>
                 {/* left sidebar */}
-                <div className='left-sidebr'>
+                <div className='left-sidebar'>
                     <div className='user-profile-section'>
                         <div className='profile-avatar'>
-                            <div className='avatar-temp'> profile icon </div>
-                            <div className='edit-icon'> edit </div>
+                            <div className='avatar-temp'> ⚪ </div>
+                            <div className='edit-icon'> ✎ </div>
                         </div>
                         <div className='username'>usernametemp</div>
                         <button className='edit-profile-btn'>Edit Profile</button>
@@ -23,10 +23,10 @@ function ProfilePage() {
                     <div className='friends-section'>
                         <div className='friends-header'>
                             <span>Friends</span>
-                            <span className='notification-bell'> bell icon </span>
+                            <span className='notification-bell'> ◉ </span>
                         </div>
                         <div className='friend-item'>
-                            <div className='friend-avatar'> avatar temp </div>
+                            <div className='friend-avatar'> ● </div>
                             <span>user1</span>
                         </div>
                     </div>
@@ -47,7 +47,12 @@ function ProfilePage() {
                         {/* Quest Card 1 */}
                         <div className='quest-card'>
                             <div className='quest-map'>
-                                <div className='map-temp'>map</div>
+                                <div className='map-temp'>◆</div>
+                            </div>
+                            <div className='quest-info'>
+                                <div>Completed: 2 days ago</div>
+                                <div>Distance: 3 miles</div>
+                                <button className='share-quest-btn'>Share Quest</button>
                             </div>
                         </div>
                     </div>
