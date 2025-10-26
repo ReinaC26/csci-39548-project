@@ -10,23 +10,24 @@ function ProfilePage() {
             <div className='profile-container'>
                 {/* left sidebar */}
                 <div className='left-sidebar'>
+
                     <div className='user-profile-section'>
                         <div className='profile-avatar'>
-                            <div className='avatar-temp'> ⚪ </div>
+                            <div className='avatar-temp'> image </div>
                             <div className='edit-icon'> ✎ </div>
                         </div>
-                        <div className='username'>usernametemp</div>
+                        <div className='username'>someusername1234</div>
                         <button className='edit-profile-btn'>Edit Profile</button>
-                    
-
                     </div>
+
+
                     <div className='friends-section'>
                         <div className='friends-header'>
                             <span>Friends</span>
-                            <span className='notification-bell'> ◉ </span>
+                            <span className='notification-bell'> bell icon </span>
                         </div>
                         <div className='friend-item'>
-                            <div className='friend-avatar'> ● </div>
+                            <div className='friend-avatar'> i </div>
                             <span>user1</span>
                         </div>
                     </div>
@@ -47,7 +48,7 @@ function ProfilePage() {
                         {/* Quest Card 1 */}
                         <div className='quest-card'>
                             <div className='quest-map'>
-                                <div className='map-temp'>◆</div>
+                                <div className='map-temp'>map</div>
                             </div>
                             <div className='quest-info'>
                                 <div>Completed: 2 days ago</div>
@@ -57,12 +58,7 @@ function ProfilePage() {
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
-
-            
         </div>
     )
 }

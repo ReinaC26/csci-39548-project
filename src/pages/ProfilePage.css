@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
 
 .profile-page {
     min-height: 100vh;
@@ -18,21 +19,19 @@
 /* left side */
 .left-sidebar {
     display: flex;
-    background-color: #2020205C;
     flex-direction: column;
-    width: 30%;
-    height: 85vh;
-    padding: 1rem;
-    border-radius: 15px;
-    box-shadow: 3px 3px 6px 3px rgba(97, 97, 97, 0.5);
+    width: 35%;
+    background: transparent;
+    
 }
 
 .user-profile-section {
-    background-color: #C0DBE4;
     border-radius: 15px;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-bottom: 1rem;
     text-align: center;
+    box-shadow: 3px 3px 6px 3px rgba(21, 21, 21, 0.5);
+    background-color: #2020205C;
 }
 
 .profile-avatar {
@@ -68,6 +67,7 @@
 }
 
 .username { 
+    background-color: #C0DBE4; 
     font-family: 'Kode Mono', monospace; 
     font-size: 1.2rem; 
     color: #0B556C; 
@@ -85,9 +85,12 @@
 }
 
 .friends-section { 
-    background-color: #5A8A95; 
-    border-radius: 15px; 
-    padding: 1rem; 
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    box-shadow: 3px 3px 6px 3px rgba(21, 21, 21, 0.5);
+    background-color: #2020205C;
 }
 
 .friends-header { 
@@ -101,8 +104,8 @@
 }
 
 .notification-bell { 
-    color: #5A8A95; 
-    font-size: 1.2rem; 
+    color: white; 
+    font-size: .8rem; 
 }
 
 .friend-item { 
@@ -134,13 +137,12 @@
 /* Right side */
 .main-content { 
     display: flex; 
-    background-color: #C0DBE4; 
+    
     flex-direction: column; 
     width: 70%; 
     height: 85vh; 
     padding: 1.5rem; 
     border-radius: 15px; 
-    box-shadow: 3px 3px 6px 3px rgba(97, 97, 97, 0.5); 
     margin-left: 1rem; 
 }
 
@@ -149,12 +151,13 @@
     justify-content: space-between; 
     align-items: center; 
     margin-bottom: 1.5rem; 
+    background: transparent;
 } 
 
 .quests-header h2 { 
-    font-family: 'Kode Mono', monospace; 
+    font-family: 'Jaro', sans-serif;
     color: white; 
-    font-size: 2rem; 
+    font-size: 5rem; 
     margin: 0; 
 } 
 
@@ -164,10 +167,18 @@
     padding: 0.5rem 1rem; 
     border: none; 
     border-radius: 8px; 
+    cursor: pointer;
     font-family: 'Kode Mono', monospace;
 }
 
 .quest-grid { 
+    background-color: #C0DBE4; 
+    box-shadow: 3px 3px 6px 3px rgba(97, 97, 97, 0.5); 
+    width: 70%; 
+    height: 85vh; 
+    padding: 1.5rem; 
+    border-radius: 15px; 
+    margin-left: 1rem; 
     display: flex; 
     flex-direction: column; 
     gap: 1rem; 
@@ -177,8 +188,9 @@
     display: flex; 
     background-color: #0B556C; 
     border-radius: 15px; 
-    padding: 1rem; 
+    padding: 1rem 1rem 1rem 1rem; 
     height: 120px;
+    align-items: center;
 } 
 
 .quest-map { 
@@ -190,9 +202,30 @@
     align-items: center; 
     justify-content: center; 
     margin-right: 1rem; 
+    
 } 
 
 .map-temp { 
     color: white; 
     font-size: 2rem; 
+}
+
+.share-quest-btn {
+    background-color: #78A2B0;
+    color: white; 
+    padding: 0.5rem 1rem; 
+    border: none; 
+    border-radius: 8px; 
+    font-family: 'Kode Mono', monospace; 
+    cursor: pointer; 
+    box-shadow: 3px 3px 6px 3px rgba(5, 6, 16, 0.5);
+}
+
+.quest-info { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    color: white; 
+    font-family: 'Kode Mono', monospace; 
+    gap: 0.5rem; 
 }
