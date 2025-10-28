@@ -22,6 +22,9 @@ function SignupForm() {
 
   return (
     <form className="login-form">
+      <h2 className="login-subtitle">Sign-up</h2>
+      <hr className="divider" />
+
       <label>Name</label>
       <input type="text" placeholder="Username" required />
 

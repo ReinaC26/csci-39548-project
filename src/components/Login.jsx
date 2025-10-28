@@ -14,9 +14,6 @@ function Login() {
     <div className="login-container" style={bgStyle}>
       <div className="login-box">
         <h1 className="login-title">SerendiQuest</h1>
-        <h2 className="login-subtitle">{isSignup ? "Sign-up" : "Login"}</h2>
-
-        <hr className="divider" />
 
         {isSignup ? <SignupForm /> : <LoginForm />}
 

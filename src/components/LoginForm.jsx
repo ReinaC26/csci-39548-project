@@ -4,6 +4,9 @@ import "./Login.css";
 function LoginForm() {
   return (
     <form className="login-form">
+      <h2 className="login-subtitle">Login</h2>
+      <hr className="divider" />
+
       <label>Email</label>
       <input type="email" placeholder="address@example.com" required />
 
