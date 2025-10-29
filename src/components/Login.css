@@ -1,0 +1,107 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.login-box {
+  background-color: #ffe2b6;
+  border-radius: 10px;
+  border-width: 10px;
+  border-color: whitesmoke;
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+  font-family: "Kode Mono", monospace;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3a2f2f;
+  margin-bottom: 0.3rem;
+}
+
+.login-subtitle {
+  font-size: 1.3rem;
+  color: #2b2b2b;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.login-form label {
+  text-align: left;
+  font-size: 0.8rem;
+  margin: 0.3rem 0;
+  color: #222;
+}
+
+.login-form input {
+  padding: 0.5rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.login-btn {
+  background-color: #bde0fe;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+
+.login-btn:hover {
+  background-color: #a4d1f8;
+}
+
+.forgot-link {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #0066cc;
+}
+
+.create-btn {
+  margin-top: 1.3rem;
+  background-color: #f9b25b;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.create-btn:hover {
+  background-color: #e39c41;
+}
+
+.divider {
+  margin: 1.2rem 0;
+  border: none;
+  border-top: 1.5px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    background-size: auto auto;
+    background-repeat: no-repeat;
+  }
+}
