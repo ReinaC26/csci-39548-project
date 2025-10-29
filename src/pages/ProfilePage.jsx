@@ -16,7 +16,7 @@ function ProfilePage() {
     const [userInfo, setUserInfo] = useState({
         username: 'someuser123',
         email: 'user123@gmail.com',
-        bio: 'Quest lover'
+        bio: 'Woooo Quests!!!!!'
     });
     return (
         <div className='profile-page'>
