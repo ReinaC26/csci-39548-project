@@ -1,20 +1,27 @@
 # CSCI-39548-Project
 
-# Getting Started with Create React App
+### Setup
+1. Navigate to the directory where you want to clone/run/save the application:
+    ```sh
+    cd example_directory
+    ```
+2. Clone the repository:
+    ```sh
+    git clone https://github.com/ReinaC26/csci-39548-project.git
+    ```
+3. Navigate to the project directory:
+    ```sh
+    cd csci-39548-project
+    ```
+4. Then, download the dependencies in package.json:
+    ```sh
+    npm install
+    ```
+5. Start the application:
+    ```sh
+    npm start
+    ```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 ### `npm test`
 
