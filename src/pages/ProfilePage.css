@@ -34,6 +34,12 @@
     background-color: #2020205C;
 }
 
+.username-edit-box {
+    background-color: #C0DBE4; 
+    padding: 1rem 1rem 1rem 1rem;
+
+}
+
 .profile-avatar {
     position: relative;
     margin-bottom: 1rem;
@@ -49,25 +55,24 @@
     justify-content: center;
     margin: 0 auto;
     color: white;
-    font-size: 24px;
+    font-size: 80px;
 }
 
 .edit-icon {
     position: absolute;
+    color: white;
     bottom: 0;
     right: 30%;
-    background-color: white;
-    border-radius: 50%;
     width: 25px;
     height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #0B556C;
+    font-size: 40px;
 }
 
 .username { 
-    background-color: #C0DBE4; 
+    
     font-family: 'Kode Mono', monospace; 
     font-size: 1.2rem; 
     color: #0B556C; 
@@ -98,14 +103,14 @@
     justify-content: space-between; 
     align-items: center; 
     color: white; 
-    font-family: 'Kode Mono', monospace; 
-    font-size: 1.1rem; 
+    font-family: 'Jaro', sans-serif; 
+    font-size: 3rem; 
     margin-bottom: 1rem; 
 }
 
 .notification-bell { 
     color: white; 
-    font-size: .8rem; 
+    font-size: 30px; 
 }
 
 .friend-item { 
@@ -127,6 +132,7 @@
     align-items: center; 
     justify-content: center; 
     color: white; 
+    font-size: 30px;
 } 
 
 .friend-item span { 
@@ -219,6 +225,9 @@
     font-family: 'Kode Mono', monospace; 
     cursor: pointer; 
     box-shadow: 3px 3px 6px 3px rgba(5, 6, 16, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .quest-info { 

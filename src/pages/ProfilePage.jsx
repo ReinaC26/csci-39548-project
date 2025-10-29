@@ -2,6 +2,13 @@ import React from 'react';
 import Navbar from './Navbar';
 import './ProfilePage.css';
 
+// icons ... 
+import { FiEdit3 } from "react-icons/fi";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { IoMdShare } from "react-icons/io";
+
+
 
 function ProfilePage() {
     return (
@@ -13,22 +20,27 @@ function ProfilePage() {
 
                     <div className='user-profile-section'>
                         <div className='profile-avatar'>
-                            <div className='avatar-temp'> image </div>
-                            <div className='edit-icon'> ✎ </div>
+                            <div className='avatar-temp'> <CgProfile /> </div>
+                            <div className='edit-icon'> <FiEdit3 /> </div>
                         </div>
-                        <div className='username'>someusername1234</div>
-                        <button className='edit-profile-btn'>Edit Profile</button>
+                        <div className='username-edit-box'>
+                            <div className='username'>someusername1234</div>
+                            <button className='edit-profile-btn'>Edit Profile</button>
+                        </div>
                     </div>
-
 
                     <div className='friends-section'>
                         <div className='friends-header'>
                             <span>Friends</span>
-                            <span className='notification-bell'> bell icon </span>
+                            <span className='notification-bell'> <IoIosNotificationsOutline /> </span>
                         </div>
                         <div className='friend-item'>
-                            <div className='friend-avatar'> i </div>
+                            <div className='friend-avatar'> <CgProfile /> </div>
                             <span>user1</span>
+                        </div>
+                        <div className='friend-item'>
+                            <div className='friend-avatar'> <CgProfile /> </div>
+                            <span>user2</span>
                         </div>
                     </div>
                 </div>
@@ -53,7 +65,18 @@ function ProfilePage() {
                             <div className='quest-info'>
                                 <div>Completed: 2 days ago</div>
                                 <div>Distance: 3 miles</div>
-                                <button className='share-quest-btn'>Share Quest</button>
+                                <button className='share-quest-btn'>Share Quest <IoMdShare /> </button>
+                            </div>
+                        </div>
+
+                        <div className='quest-card'>
+                            <div className='quest-map'>
+                                <div className='map-temp'>map</div>
+                            </div>
+                            <div className='quest-info'>
+                                <div>Completed: 2 days ago</div>
+                                <div>Distance: 3 miles</div>
+                                <button className='share-quest-btn'>Share Quest <IoMdShare /> </button>
                             </div>
                         </div>
                     </div>
