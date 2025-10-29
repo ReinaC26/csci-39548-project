@@ -90,7 +90,7 @@ function QuestGeneratorPage() {
                                     setDuration(hours);
                                   }
                                 }
-                                // Handle plain number input — assume minutes under 60, hours otherwise
+                                // Handle plain number input - assume minutes under 60, hours otherwise
                                 else {
                                   const num = parseFloat(input.replace(/[^0-9.]/g, ''));
                                   if (!isNaN(num)) {
