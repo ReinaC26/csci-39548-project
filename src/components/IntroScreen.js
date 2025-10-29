@@ -1,0 +1,2 @@
+{/* Intro Screen typing animation */}
+
