@@ -99,6 +99,13 @@
   align-self: center;
 }
 
+.toggle-btn {
+  color: #0066cc;
+  margin-top: 10px;
+  font-size: small;
+  font-family: "";
+}
+
 @media (max-width: 768px) {
   .login-container {
     background-size: auto auto;

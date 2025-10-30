@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./Login.css";
-import LoginForm from "./LoginForm";
-import FindAccount from "./FindAccount";
+import SignupForm from "./SignupForm";
 
-function Login() {
+function Signup() {
   const [isFindMode, setIsFindMode] = useState("");
   const bgStyle = {
     backgroundImage: `url(${process.env.PUBLIC_URL}/LoginBackground.png)`,
@@ -14,22 +13,15 @@ function Login() {
       <div className="login-box">
         <h1 className="login-title">SerendiQuest</h1>
 
-        {isFindMode ? <FindAccount /> : <LoginForm />}
-
-        <button
-          className="toggle-btn"
-          onClick={() => setIsFindMode(!isFindMode)}
-        >
-          {isFindMode ? "Back to Login" : "Find Account"}
-        </button>
+        <SignupForm />
         <hr className="divider" />
 
-        <a href="/signup" className="create-btn">
-          Create new account
+        <a href="/login" className="create-btn">
+          Back to Login
         </a>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Signup;

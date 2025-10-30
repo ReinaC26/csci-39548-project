@@ -1,10 +1,10 @@
 import React from "react";
 import "./Login.css";
 
-function LoginForm() {
+function FindAccount() {
   return (
     <form className="login-form">
-      <h2 className="login-subtitle">Login</h2>
+      <h2 className="login-subtitle">Find my account</h2>
       <hr className="divider" />
 
       <label>Email</label>
@@ -14,10 +14,10 @@ function LoginForm() {
       <input type="password" placeholder="Password" required />
 
       <button type="submit" className="login-btn">
-        Log-in
+        Search
       </button>
     </form>
   );
 }
 
-export default LoginForm;
+export default FindAccount;
