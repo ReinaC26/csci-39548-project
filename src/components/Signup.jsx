@@ -3,7 +3,6 @@ import "./Login.css";
 import SignupForm from "./SignupForm";
 
 function Signup() {
-  const [isFindMode, setIsFindMode] = useState("");
   const bgStyle = {
     backgroundImage: `url(${process.env.PUBLIC_URL}/LoginBackground.png)`,
   };
