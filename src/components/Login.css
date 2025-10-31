@@ -81,6 +81,8 @@
   border: none;
   border-radius: 25px;
   padding: 0.6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   font-weight: bold;
   cursor: pointer;
   font-family: inherit;
