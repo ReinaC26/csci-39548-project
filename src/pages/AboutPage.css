@@ -13,8 +13,7 @@
     font-size: 3rem;
     font-family: 'Jaro';
     color: white;
-    padding: 5rem 0.5rem 0rem;
-    margin: 0 auto; 
+    padding: 3rem 0.5rem 0rem;
     text-shadow: 2px 2px 4px rgba(71, 147, 188, 0.7);
 }
 
@@ -22,6 +21,7 @@
     font-size: 1.8rem;
     font-family: 'Kode Mono', monospace;
     color: white;
-    margin: 0 auto; 
+    margin-left: 7rem; 
+    margin-right: 7rem;
     padding-bottom: 1rem;
 }
