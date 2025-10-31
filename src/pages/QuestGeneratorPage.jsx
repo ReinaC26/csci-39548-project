@@ -137,6 +137,31 @@ function QuestGeneratorPage() {
 
                     
                 <div className="right-container">
+                    <div className="right-title">Journey</div>
+                    <div className="map-container"></div>
+                    <div className="show-location-container">
+                        <div className="show-location-btn"></div>
+                        <div className="location-btn-label">
+                            Show Start and End Locations
+                            <div className="location-icon-container">
+                                <img 
+                                    src="/start_location.png" 
+                                    alt="Start location icon" 
+                                    className="start-location-icon" 
+                                />
+                                Start
+                                <img 
+                                    src="/end_location.png" 
+                                    alt="End location icon" 
+                                    className="end-location-icon" 
+                                />
+                                End
+                            </div>
+
+                            </div>
+                        <div className="quest-complete-btn">Quest Complete!</div>
+                        <div className="regenerate-btn">Regenerate</div>
+                    </div>
                 </div>
             </div>
         </div>

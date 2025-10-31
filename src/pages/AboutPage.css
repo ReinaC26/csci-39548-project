@@ -1,0 +1,27 @@
+
+.about-page {
+    min-height: 100vh;
+    background-color: #1d1d1d;
+}
+
+.page-headings, .page-content{
+    display: flex;
+    text-align: center; 
+    flex-direction: column; 
+}
+.page-headings{
+    font-size: 3rem;
+    font-family: 'Jaro';
+    color: white;
+    padding: 3rem 0.5rem 0rem;
+    text-shadow: 2px 2px 4px rgba(71, 147, 188, 0.7);
+}
+
+.page-content {
+    font-size: 1.8rem;
+    font-family: 'Kode Mono', monospace;
+    color: white;
+    margin-left: 7rem; 
+    margin-right: 7rem;
+    padding-bottom: 1rem;
+}
