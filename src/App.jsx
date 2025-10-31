@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import QuestGeneratorPage from "./pages/QuestGeneratorPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/questgenerator" element={<QuestGeneratorPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </Router>
   );
