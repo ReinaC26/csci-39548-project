@@ -1,23 +1,23 @@
 import React from "react";
 import "./Login.css";
 
-function LoginForm() {
+function FindAccount() {
   return (
     <form className="login-form">
-      <h2 className="login-subtitle">Login</h2>
+      <h2 className="login-subtitle">Find my account</h2>
       <hr className="divider" />
+
+      <label>Name</label>
+      <input type="text" placeholder="Username" required />
 
       <label>Email</label>
       <input type="email" placeholder="address@example.com" required />
 
-      <label>Password</label>
-      <input type="password" placeholder="Password" required />
-
       <button type="submit" className="login-btn">
-        Log-in
+        Search
       </button>
     </form>
   );
 }
 
-export default LoginForm;
+export default FindAccount;
