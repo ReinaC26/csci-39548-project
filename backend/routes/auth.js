@@ -98,4 +98,34 @@ router.post('/login', async (req, res) => {
 
 // POST /api/auth/logout
 // User logout
-router.post()
+router.post('/logout', (req, res) => {
+    // jwt logout typcially handeled in frontend, providing key for funsies and consistency bc consistency is KEY ha
+    res.json({ success: true, message: 'Logged out successfully'});
+
+});
+
+// GET /api/auth/verify
+// verify token/checking if user is logged in
+router.get('/verify', async (req, res) => {
+    try {
+        const token = req.header('Authorization')?.replace('Bearer ', '');
+        if (! token) {
+            return res.status(401).json({ success: false, message: 'No token provided'});
+
+        } 
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'blah');
+        const user = await User.findById(decoded.userId);
+
+        if (! user) {
+            return res.status(401).json({ success: false, message: 'User not found'});
+        }
+
+        res.json({ success: true, user: user.toJSON() });
+    } catch (error) {
+        console.error('Token verification error: ', error);
+        res.status(401).json({success: false, message: 'Invalid token'});
+    }
+});
+
+module.exports = router;
