@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 // API ROUTES TBD
-// app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/auth'));
 // app.use('/api/users', require('./routes/users'));
 // app.use('/api/quests', require('./routes/quests'));
 
