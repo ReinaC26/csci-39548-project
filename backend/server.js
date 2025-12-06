@@ -17,13 +17,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// MONGODB... skipping for now...
-/*
+// MONGODB.
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/serendiquest')
 
 .then(() => console.log('Yayyyy hi mongodb wooo'))
 .catch((err) => console.error('AHHHhhhhh something went wrong boooo ', err)); 
-*/
+
+
 // We test the routes in this household!@!!!!!!!!
 app.get('/', (req, res) => {
     res.json({ message: 'WE HAVE A BACKEND FOLKS!!!!!!!!!' });
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
 // API ROUTES TBD
 app.use('/api/auth', require('./routes/auth'));
-// app.use('/api/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
 // app.use('/api/quests', require('./routes/quests'));
 
 //error handeling 
