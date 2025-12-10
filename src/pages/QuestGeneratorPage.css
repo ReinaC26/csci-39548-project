@@ -41,6 +41,12 @@
     text-align: center;
     margin-bottom: 0.5rem;
 }
+.left-title.centered {
+    position: absolute;
+    top: 41%;
+    left: 22.5%;
+    transform: translate(-50%, -50%);
+}
 
 /* Random Mode Display */
 .random-mode{
@@ -54,6 +60,12 @@
     border-radius: 15px;
     background-color: #0B556C;
     gap: 2rem;
+}
+.random-mode.centered {
+    position: absolute;
+    top: 50%;
+    left: 12%;
+    transform: translate(-50%, -50%);
 }
 .text-container{
     display: flex;
@@ -219,6 +231,21 @@
     font-family: 'Kode Mono', monospace;
     background: transparent;
     color: black;
+}
+
+.create-btn {
+    display: flex;
+    background-color: #0B556C;
+    color: white;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    height: 40px;
+    width: 100px;
+    border-radius: 2px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2rem;
+    cursor: pointer;
 }
 
 /* Right Side */
