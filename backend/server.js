@@ -1,0 +1,51 @@
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 5002;
+
+//const uri = process.env.MONGODB_URI;
+
+// MIDDLEWARE
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// MONGODB.
+mongoose.connect(process.env.MONGODB_URI)
+
+.then(() => console.log('Yayyyy hi mongodb wooo'))
+.catch((err) => console.error('AHHHhhhhh something went wrong boooo ', err)); 
+
+
+// We test the routes in this household!@!!!!!!!!
+app.get('/', (req, res) => {
+    res.json({ message: 'WE HAVE A BACKEND FOLKS!!!!!!!!!' });
+});
+
+// API ROUTES TBD
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
+// app.use('/api/quests', require('./routes/quests'));
+
+//error handeling 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'boooooooo somethings wrong', error: err.message });
+});
+
+// 404
+app.use((req, res) => {
+    res.status(404).json({message: 'BOO 404'});
+});
+app.listen(PORT, () => {
+    console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
+})
+
+module.exports = app;
