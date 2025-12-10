@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
+import Map from '../components/Map';
 import './QuestGeneratorPage.css';
 
 function QuestGeneratorPage() {
@@ -137,8 +138,11 @@ function QuestGeneratorPage() {
 
                     
                 <div className="right-container">
-                    <div className="right-title">Journey</div>
-                    <div className="map-container"></div>
+                    <div className="right-title">Journey</div>               
+                    <Map 
+                        width="100%" 
+                        height="85vh" 
+                    />
                     <div className="show-location-container">
                         <div className="show-location-btn"></div>
                         <div className="location-btn-label">
