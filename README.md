@@ -21,7 +21,12 @@
     ```sh
     npm start
     ```
-
+6. In another terminal, run the backend
+    ```sh 
+    cd backend
+    npm install   
+    node server.js
+    ```
 
 ### `npm test`
 
