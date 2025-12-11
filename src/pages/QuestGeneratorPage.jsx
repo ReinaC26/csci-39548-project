@@ -144,9 +144,9 @@ function QuestGeneratorPage() {
                     />
                     </>
                     )}
-                    {isRandomMode && (
-                        <button className={`create-btn ${isRandomMode ? 'centered' : ''}`}>Create</button>
-                    )}
+                    <button className={`quest-create-btn ${isRandomMode ? 'centered' : ''}`}>
+                        Create
+                    </button>
                     </div>
 
                     

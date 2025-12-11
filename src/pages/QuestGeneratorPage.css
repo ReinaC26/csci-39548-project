@@ -93,6 +93,9 @@
     background-color: white;
     height: 20px;
     width: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
 }
 
 /* Distance and Duration */
@@ -176,7 +179,7 @@
     flex-direction: row;
     align-items: center;
     margin-left: 2rem;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
     margin-bottom: 0.5rem;
     gap: 1rem;
 }
@@ -233,7 +236,7 @@
     color: black;
 }
 
-.create-btn {
+.quest-create-btn {
     display: flex;
     background-color: #0B556C;
     color: white;
@@ -241,11 +244,31 @@
     font-weight: bold;
     height: 40px;
     width: 100px;
-    border-radius: 2px;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
-    margin-left: 2rem;
+    margin-left: 15rem;
+    margin-top: 0.8rem;
     cursor: pointer;
+}
+.quest-create-btn.centered {
+    display: flex;
+    background-color: #0B556C;
+    color: white;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15rem;
+    margin-top: 19.5rem;
+    cursor: pointer;
+}
+.quest-create-btn:hover {
+    background-color: #fcc572;
+    transition: background-color 0.3s ease;
 }
 
 /* Right Side */
