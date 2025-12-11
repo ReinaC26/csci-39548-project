@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // MONGODB.
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/serendiquest')
+mongoose.connect(process.env.MONGODB_URI)
 
 .then(() => console.log('Yayyyy hi mongodb wooo'))
 .catch((err) => console.error('AHHHhhhhh something went wrong boooo ', err)); 
@@ -48,4 +48,5 @@ app.listen(PORT, () => {
     console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
 })
 
+module.exports = app;
 module.exports = app;

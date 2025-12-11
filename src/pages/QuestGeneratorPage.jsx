@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
+import Map from '../components/Map';
 import './QuestGeneratorPage.css';
 
 function QuestGeneratorPage() {
     const [distance, setDistance] = useState(50);
     const [duration, setDuration] = useState(2);
+    const [isRandomMode, setIsRandomMode] = useState(false);
 
     const handleDistanceSliderChange = (event) => {
         setDistance(event.target.value);
@@ -19,16 +21,23 @@ function QuestGeneratorPage() {
             <Navbar />
             <div className="page-container">
                 <div className="left-container">
-                    <div className="left-title">
+                    <div className={`left-title ${isRandomMode ? 'centered' : ''}`}>
                         Customize Your Quest
                     </div>
-                    <div className="random-mode">
+                    <div className={`random-mode ${isRandomMode ? 'centered' : ''}`}>
                         <div className="text-container">
                         <div className="bold-text">Random Quest Mode</div>
                         <div className="regular-text">Create a surprise adventure!</div>
                         </div>
-                        <button className="mode-selection-button"></button>
+                        <button 
+                            className="mode-selection-button"
+                            onClick={() => setIsRandomMode(!isRandomMode)}
+                        >
+                            {isRandomMode && <span>✓</span>}
+                        </button>
                     </div>
+                    {!isRandomMode && (
+                        <>
                     {/* Customize distance */}
                     <div className="distance">
                         *Distance = 
@@ -69,9 +78,9 @@ function QuestGeneratorPage() {
                             type="text"
                             className="input-box"
                             value={
-                                duration < 1 // If duration is less than 1 hour
-                                    ? `${(duration * 60).toFixed(0)} mins` // If yes then show minutes
-                                    : `${Math.floor(duration)} hr ${Math.floor((duration % 1) * 60)} mins` // If no then show hours + minutes
+                                duration < 1
+                                    ? `${(duration * 60).toFixed(0)} mins`
+                                    : `${Math.floor(duration)} hr ${Math.floor((duration % 1) * 60)} mins`
                             }
                             onChange={(e) => {
                                 const input = e.target.value.toLowerCase();
@@ -133,12 +142,20 @@ function QuestGeneratorPage() {
                         className="description-input-box focus:outline-none focus:shadow-none focus:ring-transparent"
                         placeholder="Description of your desired quest" 
                     />
+                    </>
+                    )}
+                    <button className={`quest-create-btn ${isRandomMode ? 'centered' : ''}`}>
+                        Create
+                    </button>
                     </div>
 
                     
                 <div className="right-container">
-                    <div className="right-title">Journey</div>
-                    <div className="map-container"></div>
+                    <div className="right-title">Journey</div>               
+                    <Map 
+                        width="100%" 
+                        height="85vh" 
+                    />
                     <div className="show-location-container">
                         <div className="show-location-btn"></div>
                         <div className="location-btn-label">
