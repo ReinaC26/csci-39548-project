@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 // API ROUTES TBD
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
-// app.use('/api/quests', require('./routes/quests'));
+app.use('/api/quests', require('./routes/quests'));
 
 //error handeling 
 app.use((err, req, res, next) => {
@@ -48,5 +48,4 @@ app.listen(PORT, () => {
     console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
 })
 
-module.exports = app;
 module.exports = app;

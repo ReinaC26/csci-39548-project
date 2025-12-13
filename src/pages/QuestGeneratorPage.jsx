@@ -7,6 +7,12 @@ function QuestGeneratorPage() {
     const [distance, setDistance] = useState(50);
     const [duration, setDuration] = useState(2);
     const [isRandomMode, setIsRandomMode] = useState(false);
+    const [startLocation, setStartLocation] = useState('');
+    const [endLocation, setEndLocation] = useState('');
+    const [description, setDescription] = useState('');
+    const [generatedQuest, setGeneratedQuest] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleDistanceSliderChange = (event) => {
         setDistance(event.target.value);
@@ -16,11 +22,100 @@ function QuestGeneratorPage() {
         setDuration(Number(event.target.value));
     };
 
+    // Validate required fields
+    const validateForm = () => {
+        if (isRandomMode) {
+            return true; // No validation needed for random mode
+        }
+        
+        if (!startLocation.trim()) {
+            setError('Please enter a start location');
+            return false;
+        }
+        
+        if (!description.trim()) {
+            setError('Please enter a quest description');
+            return false;
+        }
+        
+        return true;
+    };
+
+    // API call to create quest
+    const handleCreateQuest = async () => {
+        setError('');
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        setIsLoading(true);
+        try {
+            const requestBody = isRandomMode 
+                ? { isRandomMode: true }
+                : {
+                    distance: `${distance} mi`,
+                    duration: duration < 1 
+                        ? `${(duration * 60).toFixed(0)} mins` 
+                        : `${Math.floor(duration)} hr ${Math.floor((duration % 1) * 60)} mins`,
+                    startLocation,
+                    endLocation: endLocation || startLocation, // Use start if end not provided
+                    description,
+                    isRandomMode: false
+                };
+
+            const response = await fetch('/api/quests', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setGeneratedQuest(data);
+            } else {
+                setError(data.error || 'Failed to create quest. Please try again.');
+            }
+        } catch (error) {
+            console.error("Failed to fetch:", error);
+            setError('Network error. Please check your connection and try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="generator-page">
             <Navbar />
             <div className="page-container">
                 <div className="left-container">
+                {generatedQuest ? (
+                        <div className="quest-result-card">
+                            <div className="left-title centered">Your Quest</div>
+                            <div className="quest-details-container">
+                                <div className="quest-section">
+                                    <p><strong>Start Location:</strong> {generatedQuest.startLocation}</p>
+                                    <p><strong>End Location:</strong> {generatedQuest.endLocation}</p>
+                                </div>
+                                <div className="quest-section">
+                                    <p><strong>Distance:</strong> {generatedQuest.distance}</p>
+                                    <p><strong>Time:</strong> {generatedQuest.duration}</p>
+                                </div>
+                                <div className="quest-section">
+                                    <div className="bold-text">Description:</div>
+                                    <div className="regular-text">{generatedQuest.description}</div>
+                                </div>
+                                <div className="quest-section">
+                                    <div className="bold-text">Goal:</div>
+                                    <div className="regular-text">{generatedQuest.questGoal}</div>
+                                </div>
+                            </div>
+                            <button className="quest-create-btn" onClick={() => setGeneratedQuest(null)}>
+                                Edit Quest
+                            </button>
+                        </div>
+                    ) : (
+                        <>
                     <div className={`left-title ${isRandomMode ? 'centered' : ''}`}>
                         Customize Your Quest
                     </div>
@@ -31,7 +126,10 @@ function QuestGeneratorPage() {
                         </div>
                         <button 
                             className="mode-selection-button"
-                            onClick={() => setIsRandomMode(!isRandomMode)}
+                            onClick={() => {
+                                setIsRandomMode(!isRandomMode);
+                                setError(''); // Clear any errors when toggling mode
+                            }}
                         >
                             {isRandomMode && <span>✓</span>}
                         </button>
@@ -46,7 +144,6 @@ function QuestGeneratorPage() {
                             className="input-box"
                             value={`${distance} mi`}
                             onChange={(e) => {
-                                // Remove non-digit or decimal characters before updating
                                 const val = e.target.value.replace(/[^0-9.]/g, '');
                                 if (val === '') {
                                   setDistance(0);
@@ -85,21 +182,18 @@ function QuestGeneratorPage() {
                             onChange={(e) => {
                                 const input = e.target.value.toLowerCase();
                           
-                                // Handle minutes input
                                 if (input.includes('min')) {
                                   const mins = parseFloat(input.replace(/[^0-9.]/g, ''));
                                   if (!isNaN(mins) && mins >= 0 && mins <= 300) {
                                     setDuration(mins / 60);
                                   }
                                 }
-                                // Handle hours input
                                 else if (input.includes('hr')) {
                                   const hours = parseFloat(input.replace(/[^0-9.]/g, ''));
                                   if (!isNaN(hours) && hours >= 0 && hours <= 5) {
                                     setDuration(hours);
                                   }
                                 }
-                                // Handle plain number input - assume minutes under 60, hours otherwise
                                 else {
                                   const num = parseFloat(input.replace(/[^0-9.]/g, ''));
                                   if (!isNaN(num)) {
@@ -129,25 +223,45 @@ function QuestGeneratorPage() {
                         type="text" 
                         className="start-location-input-box focus:outline-none focus:shadow-none focus:ring-transparent"
                         placeholder="Use current location or enter an address" 
+                        value={startLocation}
+                        onChange={(e) => setStartLocation(e.target.value)}
                     />
                     <div className="end-location">End Location</div>
                     <input 
                         type="text" 
                         className="end-location-input-box focus:outline-none focus:shadow-none focus:ring-transparent"
                         placeholder="Use current location or enter an address" 
+                        value={endLocation}
+                        onChange={(e) => setEndLocation(e.target.value)}
                     />
                     <div className="end-location">*Quest Description</div>
                     <textarea 
                         type="text" 
                         className="description-input-box focus:outline-none focus:shadow-none focus:ring-transparent"
                         placeholder="Description of your desired quest" 
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                     </>
                     )}
-                    <button className={`quest-create-btn ${isRandomMode ? 'centered' : ''}`}>
-                        Create
+                    
+                    {/* Error message */}
+                    {error && (
+                        <div className="error-message" style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                            {error}
+                        </div>
+                    )}
+                    
+                    <button 
+                        className={`quest-create-btn ${isRandomMode ? 'centered' : ''}`}
+                        onClick={handleCreateQuest}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Creating Quest..." : "Create"}   
                     </button>
-                    </div>
+                    </>
+                    )}
+                </div>
 
                     
                 <div className="right-container">
@@ -174,10 +288,9 @@ function QuestGeneratorPage() {
                                 />
                                 End
                             </div>
-
-                            </div>
+                        </div>
                         <div className="quest-complete-btn">Quest Complete!</div>
-                        <div className="regenerate-btn">Regenerate</div>
+                        <div className="regenerate-btn" onClick={handleCreateQuest}>Regenerate</div>
                     </div>
                 </div>
             </div>
