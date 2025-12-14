@@ -48,7 +48,6 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
             if (response.ok) {
                 alert('Thank you for your feedback!');
                 onClose();
-                // Reset form
                 setRating(0);
                 setComment('');
                 setImage('');
@@ -73,11 +72,11 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
         >
             <div
                 onClick={(e) => e.stopPropagation()}
-                className="bg-[#FFF9F0] rounded-[10px] p-[20px] max-w-xl w-11/12 max-h-[600px] overflow-auto shadow-2xl border-[25px] border-[#FFE5BF]"
+                className="bg-[#FFF9F0] rounded-[10px] p-[20px] max-w-[500px] w-11/12 max-h-[600px] overflow-auto shadow-2xl border-[25px] border-[#FFE5BF]"
             >
                 {/* Header */}
                 <div className="mb-2 p-1">
-                    <h2 className="text-4xl font-bold mb-2">
+                    <h2 className="text-3xl font-bold mb-2">
                         Congratulations! 🎉
                     </h2>
                     <p className="text-lg text-gray-800">
@@ -92,7 +91,7 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
 
                     {/* Star Rating */}
                     <div className="mb-6">
-                        <label className="block mb-2 text-sm">
+                        <label className="block text-sm">
                             How did you feel about the quest?
                         </label>
                         <div className="flex gap-2 text-5xl">
@@ -122,7 +121,7 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="Share your thoughts..."
-                            className="w-full min-h-24 p-3 text-sm rounded-lg border-2 border-[#D4C4A8] resize-y bg-white focus:outline-none focus:ring-2 focus:ring-[#B8A989]"
+                            className="w-full min-h-15 p-3 text-sm rounded-lg border-2 border-[#D4C4A8] resize-y bg-white focus:outline-none focus:ring-2 focus:ring-[#B8A989]"
                         />
                     </div>
 
