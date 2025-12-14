@@ -306,14 +306,19 @@ function QuestGeneratorPage() {
                         <div className="quest-complete-btn">Quest Complete!</div>
                         <div className="regenerate-btn">
                         {!isRandomMode ? (
-                                <button onClick={() => setGeneratedQuest(null)}>
+                                <button 
+                                    onClick={() => setGeneratedQuest(null)}
+                                    disabled={!generatedQuest}
+                                    style={{ opacity: generatedQuest ? 1 : 0.5, cursor: generatedQuest ? 'pointer' : 'not-allowed' }}
+                                >
                                     Edit Quest
                                 </button>
                             ) : (
                                 <button 
                                     onClick={handleCreateQuest}
-                                    disabled={isLoading}
-                                    >
+                                    disabled={isLoading || !generatedQuest}
+                                    style={{ opacity: generatedQuest && !isLoading ? 1 : 0.5, cursor: generatedQuest && !isLoading ? 'pointer' : 'not-allowed' }}
+                                >
                                     {isLoading ? "Loading..." : "Regenerate"}   
                                 </button>
                             )}

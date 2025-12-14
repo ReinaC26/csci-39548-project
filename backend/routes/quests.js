@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
     try {
         const model = genAI.getGenerativeModel({ 
-            model: 'gemini-2.5-flash'
+            model: 'gemini-2.0-flash-exp'
         });
 
         const prompt = `
@@ -39,16 +39,23 @@ router.post('/', async (req, res) => {
             Inputs:
             - Max Distance: ${distance}
             - Max Duration: ${duration}
-            - Start Location: ${startLocation || 'Any interesting starting point'}
-            - End Location: ${endLocation || 'An optional final destination'}
+            - Start Location: ${startLocation || 'Any interesting starting point, provide the specific address'}
+            - End Location: ${endLocation || 'A final destination, provide the specific address'}
             - Theme: "${description}"
 
-            IMPORTANT INSTRUCTIONS for the "description" field:
-            1. Write it as a narrative journey (e.g., "Walk past the old clock tower and look for the hidden alley...").
-            2. Incorporate specific landmarks, architectural details, or "hidden gems" related to the theme.
-            3. Break the journey into clear phases: the beginning, the middle transition, and the approach to the destination.
-            4. Match the tone to the user's theme if they add any (e.g., spooky, historical, or academic).
-            5. Total length should be around 2 descriptive paragraphs.
+            IMPORTANT INSTRUCTIONS:
+                For the "distance" and "duration" field:
+                    1. Ensure the distance does not exceed the provided maximum distance.
+                    2. Ensure the duration does not exceed the provided maximum duration.
+                    3. If the duration user enter isn't possible within the distance, adjust the duration to fit a realistic pace 
+                    and provide a notice for user to understand.
+
+                For the "description" field:
+                    1. Write it as a narrative journey (e.g., "Walk past the old clock tower and look for the hidden alley...").
+                    2. Incorporate specific landmarks, architectural details, or "hidden gems" related to the theme.
+                    3. Break the journey into clear phases: the beginning, the middle transition, and the approach to the destination.
+                    4. Match the tone to the user's theme if they add any (e.g., spooky, historical, or academic).
+                    5. Total length should be around 2 descriptive paragraphs.
         `;
 
         const result = await model.generateContent({
