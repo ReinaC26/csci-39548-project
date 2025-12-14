@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Map from '../components/Map';
+import FeedbackForm from '../components/FeedbackForm';
 import './QuestGeneratorPage.css';
 
 function QuestGeneratorPage() {
@@ -13,6 +14,7 @@ function QuestGeneratorPage() {
     const [generatedQuest, setGeneratedQuest] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
     const handleDistanceSliderChange = (event) => {
         setDistance(event.target.value);
@@ -303,13 +305,25 @@ function QuestGeneratorPage() {
                                 End
                             </div>
                         </div>
-                        <div className="quest-complete-btn">Quest Complete!</div>
+                        <div 
+    className="quest-complete-btn"
+    onClick={() => setShowFeedbackForm(true)}
+    style={{ 
+        opacity: 1, 
+        cursor: 'pointer' 
+    }}
+>
+    Quest Complete!
+</div>
                         <div className="regenerate-btn">
                         {!isRandomMode ? (
                                 <button 
                                     onClick={() => setGeneratedQuest(null)}
                                     disabled={!generatedQuest}
-                                    style={{ opacity: generatedQuest ? 1 : 0.5, cursor: generatedQuest ? 'pointer' : 'not-allowed' }}
+                                    style={{ 
+                                        opacity: generatedQuest ? 1 : 0.5, 
+                                        cursor: generatedQuest ? 'pointer' : 'not-allowed' 
+                                    }}
                                 >
                                     Edit Quest
                                 </button>
@@ -326,6 +340,11 @@ function QuestGeneratorPage() {
                     </div>
                 </div>
             </div>
+            <FeedbackForm 
+                isOpen={showFeedbackForm} 
+                onClose={() => setShowFeedbackForm(false)}
+                questId={generatedQuest?._id}
+            />
         </div>
     );
 }

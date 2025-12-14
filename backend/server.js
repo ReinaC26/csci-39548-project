@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/quests', require('./routes/quests'));
+app.use('/api/feedback', require('./routes/feedback'));
 
 //error handeling 
 app.use((err, req, res, next) => {
