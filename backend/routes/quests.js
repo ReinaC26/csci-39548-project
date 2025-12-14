@@ -68,6 +68,7 @@ router.post('/', async (req, res) => {
             startLocation: questData.startLocation,
             endLocation: questData.endLocation,
             description: questData.description,
+            questGoal: questData.questGoal
         });
 
         const savedQuest = await newQuest.save();

@@ -50,35 +50,43 @@ function QuestGeneratorPage() {
         }
         
         setIsLoading(true);
+        
         try {
             const requestBody = isRandomMode 
-                ? { isRandomMode: true }
+                ? { 
+                    distance: '5 mi',
+                    duration: '1 hr',
+                    startLocation: 'Random location in New York City',
+                    endLocation: 'Random location in New York City',
+                    description: 'surprise adventure'
+                  }
                 : {
                     distance: `${distance} mi`,
                     duration: duration < 1 
                         ? `${(duration * 60).toFixed(0)} mins` 
                         : `${Math.floor(duration)} hr ${Math.floor((duration % 1) * 60)} mins`,
                     startLocation,
-                    endLocation: endLocation || startLocation, // Use start if end not provided
-                    description,
-                    isRandomMode: false
+                    endLocation: endLocation || startLocation,
+                    description
                 };
 
-            const response = await fetch('/api/quests', {
+            const response = await fetch('http://localhost:5002/api/quests', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody),
             });
 
-            const data = await response.json();
-            if (response.ok) {
-                setGeneratedQuest(data);
-            } else {
-                setError(data.error || 'Failed to create quest. Please try again.');
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `Server error: ${response.status}`);
             }
+
+            const data = await response.json();
+            setGeneratedQuest(data);
+            
         } catch (error) {
             console.error("Failed to fetch:", error);
-            setError('Network error. Please check your connection and try again.');
+            setError(error.message || 'Failed to create quest. Please try again.');
         } finally {
             setIsLoading(false);
         }
@@ -90,8 +98,16 @@ function QuestGeneratorPage() {
             <div className="page-container">
                 <div className="left-container">
                 {generatedQuest ? (
+                    <>
+                    <button className="back-btn" onClick={() => {
+                        setGeneratedQuest(null);
+                        setIsRandomMode(false);
+                    }}>
+                        Back
+                    </button>
+                    
                         <div className="quest-result-card">
-                            <div className="left-title centered">Your Quest</div>
+                            <div className="left-title">Your Quest</div>
                             <div className="quest-details-container">
                                 <div className="quest-section">
                                     <p><strong>Start Location:</strong> {generatedQuest.startLocation}</p>
@@ -110,10 +126,8 @@ function QuestGeneratorPage() {
                                     <div className="regular-text">{generatedQuest.questGoal}</div>
                                 </div>
                             </div>
-                            <button className="quest-create-btn" onClick={() => setGeneratedQuest(null)}>
-                                Edit Quest
-                            </button>
                         </div>
+                    </>
                     ) : (
                         <>
                     <div className={`left-title ${isRandomMode ? 'centered' : ''}`}>
@@ -128,7 +142,7 @@ function QuestGeneratorPage() {
                             className="mode-selection-button"
                             onClick={() => {
                                 setIsRandomMode(!isRandomMode);
-                                setError(''); // Clear any errors when toggling mode
+                                setError('');
                             }}
                         >
                             {isRandomMode && <span>✓</span>}
@@ -257,7 +271,7 @@ function QuestGeneratorPage() {
                         onClick={handleCreateQuest}
                         disabled={isLoading}
                     >
-                        {isLoading ? "Creating Quest..." : "Create"}   
+                        {isLoading ? "Loading..." : "Create"}   
                     </button>
                     </>
                     )}
@@ -290,7 +304,20 @@ function QuestGeneratorPage() {
                             </div>
                         </div>
                         <div className="quest-complete-btn">Quest Complete!</div>
-                        <div className="regenerate-btn" onClick={handleCreateQuest}>Regenerate</div>
+                        <div className="regenerate-btn">
+                        {!isRandomMode ? (
+                                <button onClick={() => setGeneratedQuest(null)}>
+                                    Edit Quest
+                                </button>
+                            ) : (
+                                <button 
+                                    onClick={handleCreateQuest}
+                                    disabled={isLoading}
+                                    >
+                                    {isLoading ? "Loading..." : "Regenerate"}   
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
