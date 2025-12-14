@@ -68,15 +68,15 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
 
     return (
         <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 font-mono bg-black bg-opacity-50 flex items-center justify-center z-50"
             onClick={onClose}
         >
             <div
                 onClick={(e) => e.stopPropagation()}
-                className="bg-[#FFF9F0] rounded-[10px] p-[20px] max-w-xl w-11/12 max-h-[600px] overflow-auto shadow-2xl border-[30px] border-[#FFE5BF]"
+                className="bg-[#FFF9F0] rounded-[10px] p-[20px] max-w-xl w-11/12 max-h-[600px] overflow-auto shadow-2xl border-[25px] border-[#FFE5BF]"
             >
                 {/* Header */}
-                <div className="mb-2 text-center">
+                <div className="mb-2 p-1">
                     <h2 className="text-4xl font-bold mb-2">
                         Congratulations! 🎉
                     </h2>
@@ -85,8 +85,8 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
                     </p>
                 </div>
 
-                <div className="rounded-2xl p-8">
-                    <p className="text-base mb-5 text-center">
+                <div className="rounded-2xl p-1">
+                    <p className="text-base mb-5">
                         Please take a moment to complete this short form to help us improve.
                     </p>
 
