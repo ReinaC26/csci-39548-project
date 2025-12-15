@@ -306,15 +306,16 @@ function QuestGeneratorPage() {
                             </div>
                         </div>
                         <div 
-    className="quest-complete-btn"
-    onClick={() => setShowFeedbackForm(true)}
-    style={{ 
-        opacity: 1, 
-        cursor: 'pointer' 
-    }}
->
-    Quest Complete!
-</div>
+                            className="quest-complete-btn"
+                            onClick={() => generatedQuest && !isLoading && setShowFeedbackForm(true)}
+                            disabled={isLoading || !generatedQuest}
+                            style={{ 
+                                opacity: generatedQuest && !isLoading ? 1 : 0.5, 
+                                cursor: generatedQuest && !isLoading ? 'pointer' : 'not-allowed' 
+                            }}
+                        >
+                            Quest Complete!
+                        </div>
                         <div className="regenerate-btn">
                         {!isRandomMode ? (
                                 <button 
@@ -344,6 +345,10 @@ function QuestGeneratorPage() {
                 isOpen={showFeedbackForm} 
                 onClose={() => setShowFeedbackForm(false)}
                 questId={generatedQuest?._id}
+                onSubmitSuccess={() => {
+                    setGeneratedQuest(null);
+                    setIsRandomMode(false);
+                }}
             />
         </div>
     );

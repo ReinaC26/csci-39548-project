@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function FeedbackPopup({ isOpen, onClose, questId }) {
+function FeedbackForm({ isOpen, onClose, questId }) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -37,10 +37,10 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    userId: 'USER_ID_HERE', // Replace with actual user ID from auth
+                    userId: '000000000000000000000000', // Replace with actual user ID from auth
                     rate: rating,
                     comment,
-                    image: image || undefined,
+                    image: image || '',
                     questId: questId
                 })
             });
@@ -186,4 +186,4 @@ function FeedbackPopup({ isOpen, onClose, questId }) {
     );
 }
 
-export default FeedbackPopup;
+export default FeedbackForm;
