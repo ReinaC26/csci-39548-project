@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function FeedbackForm({ isOpen, onClose, questId }) {
+function FeedbackForm({ isOpen, onClose, questId, onSubmitSuccess }) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -52,6 +52,9 @@ function FeedbackForm({ isOpen, onClose, questId }) {
                 setComment('');
                 setImage('');
                 setImageFile(null);
+                if (onSubmitSuccess) {
+                    onSubmitSuccess();
+                }
             } else {
                 alert('Failed to submit feedback. Please try again.');
             }
