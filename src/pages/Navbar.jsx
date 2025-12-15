@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
@@ -8,20 +8,26 @@ function Navbar() {
       <div className="nav-container">
         {/* Left Links */}
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/questgenerator">Quest Generator</Link>
+          <NavLink 
+            to="/" className={({ isActive }) => (isActive ? 'active' : '')}
+            >Home</NavLink>
+          <NavLink to="/questgenerator" className={({ isActive }) => (isActive ? 'active' : '')}
+          >Quest Generator</NavLink>
         </div>
 
         {/* Center Logo */}
-        <Link to="/" className="nav-logo">
+        <NavLink to="/" className="nav-logo">
           SerendiQuest
-        </Link>
+        </NavLink>
 
         {/* Right Links */}
         <div className="nav-links">
-          <Link to="/about">About</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/login">Login</Link>
+          <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}
+          >About</NavLink>
+          <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}
+          >Profile</NavLink>
+          <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}
+          >Login</NavLink>
         </div>
       </div>
     </nav>

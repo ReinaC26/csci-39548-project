@@ -41,6 +41,12 @@
     text-align: center;
     margin-bottom: 0.5rem;
 }
+.left-title.centered {
+    position: absolute;
+    top: 41%;
+    left: 22.5%;
+    transform: translate(-50%, -50%);
+}
 
 /* Random Mode Display */
 .random-mode{
@@ -54,6 +60,12 @@
     border-radius: 15px;
     background-color: #0B556C;
     gap: 2rem;
+}
+.random-mode.centered {
+    position: absolute;
+    top: 50%;
+    left: 12%;
+    transform: translate(-50%, -50%);
 }
 .text-container{
     display: flex;
@@ -81,6 +93,9 @@
     background-color: white;
     height: 20px;
     width: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
 }
 
 /* Distance and Duration */
@@ -164,7 +179,7 @@
     flex-direction: row;
     align-items: center;
     margin-left: 2rem;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
     margin-bottom: 0.5rem;
     gap: 1rem;
 }
@@ -221,6 +236,41 @@
     color: black;
 }
 
+.quest-create-btn {
+    display: flex;
+    background-color: #0B556C;
+    color: white;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    height: 40px;
+    width: 120px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15rem;
+    margin-top: 0.8rem;
+    cursor: pointer;
+}
+.quest-create-btn.centered {
+    display: flex;
+    background-color: #0B556C;
+    color: white;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    height: 40px;
+    width: 120px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15rem;
+    margin-top: 19.5rem;
+    cursor: pointer;
+}
+.quest-create-btn:hover {
+    background-color: #fcc572;
+    transition: background-color 0.3s ease;
+}
+
 /* Right Side */
 .right-title{
     font-size: 1.5rem;
@@ -230,7 +280,7 @@
     text-align: center;
     margin-bottom: 0.5rem;
 }
-.map-container{
+/* .map-container{
     display: flex;
     height: 65vh;
     width: 51vw;
@@ -238,13 +288,13 @@
     border-radius: 15px;
     justify-content: center;
     align-items: center;
-}
+} */
 .show-location-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
-    gap: 0.8rem;
+    gap: 1rem;
     flex-direction: row;
 }
 .show-location-btn{
@@ -286,7 +336,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 15px;
-    margin-left: 8rem;
+    margin-left: 7rem;
     font-family: 'Kode Mono', monospace;
 }
 .quest-complete-btn:hover{
@@ -306,5 +356,65 @@
 }
 .regenerate-btn:hover{
     background-color: #5C8D9A;
+    cursor: pointer;
+}
+
+/* Quest page */
+.back-btn{
+    display: flex;
+    background-color: #0B556C;
+    color: white;
+    font-family: 'Kode Mono', monospace;
+    height: 35px;
+    width: 100px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+.quest-result-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 1vh;
+    color: #0B556C;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.quest-details-container p {
+    margin-bottom: 0.5rem;
+    font-size: 14px;
+}
+
+.quest-section {
+    margin-top: 1.5rem;
+}
+
+.quest-section .bold-text {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.quest-section .regular-text {
+    line-height: 1.6;
+    font-size: 13px;
+    text-align: justify;
+}
+.quest-edit-btn {
+    display: flex;
+    background-color: #0B617C;
+    color: white;
+    font-family: 'Kode Mono', monospace;
+    height: 35px;
+    width: 120px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }

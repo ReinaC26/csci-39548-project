@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // MONGODB.
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/serendiquest')
+mongoose.connect(process.env.MONGODB_URI)
 
 .then(() => console.log('Yayyyy hi mongodb wooo'))
 .catch((err) => console.error('AHHHhhhhh something went wrong boooo ', err)); 
@@ -32,7 +32,8 @@ app.get('/', (req, res) => {
 // API ROUTES TBD
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
-// app.use('/api/quests', require('./routes/quests'));
+app.use('/api/quests', require('./routes/quests'));
+app.use('/api/feedback', require('./routes/feedback'));
 
 //error handeling 
 app.use((err, req, res, next) => {
