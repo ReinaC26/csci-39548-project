@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import './ProfilePage.css';
 
@@ -13,11 +13,136 @@ import { IoMdShare } from "react-icons/io";
 
 function ProfilePage() {
     const [isEditing, setIsEditing] = useState(false);
+    const [user, setUser] = useState(null);
+    const [userQuests, setUserQuests] = useState([]);
+    const [friends, setFriends] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [questFilter, setQuestFilter] = useState('all');
+
     const [userInfo, setUserInfo] = useState({
-        username: 'someuser123',
-        email: 'user123@gmail.com',
-        bio: 'Woooo Quests!!!!!'
+        username: '',
+        email: '',
+        bio: ''
     });
+
+    // get token from localStorage (**store JWT token  here :)))))
+    const getToken = () => {
+        return localStorage.getItem('token');
+    };
+
+    // api request helper
+    const apiRequest = async (url, options = {}) => {
+        const token = getToken();
+        const defaultOptions = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const response = await fetch(`http://localhost:5002${url}`, {
+            ...defaultOptions,
+            ...options,
+            headers: { ...defaultOptions.headers, ...options.headers }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        return response.json();
+    };
+    
+    // load user profile
+    const loadProfile = async () => {
+        try {
+            const [profileResponse, friendsResponse] = await Promise.all([ apiRequest('/api/users/profile'), apiRequest('/api/users/friends') ]);
+
+            setUser(profileResponse.user);
+            setUserInfo({ 
+                username: profileResponse.user.username,
+                email: profileResponse.user.email,
+                bio: profileResponse.user.bio || ''
+            });
+            setFriends(friendsResponse.friends || []);
+        } catch (error) {
+            console.error('Failed to load profile: ', error);
+        }
+    };
+
+    // load user quests w/ filtering
+    const loadQuests = async (filter = 'all') => {
+        try {
+            const response = await apiRequest(`/api/users/quests?filter=${filter}`);
+            setUserQuests(response.quests || []);
+        } catch (error) {
+            console.error('Failed to load quests: ', error);
+        }
+    };
+
+    useEffect(() => {
+        const initializeProfile = async () => {
+            setLoading(true);
+            try {
+                await loadProfile();
+                await loadQuests();
+            } catch (error) {
+                console.error('Initializing error: ', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        initializeProfile();
+    }, []);
+
+    // handle filter change
+    const handleFilterChange = (e) => {
+        const newFilter = e.target.value;
+        setQuestFilter(newFilter);
+        loadQuests(newFilter);
+    };
+
+    // if (loading) { 
+    //     return ( 
+    //         <div className='profile-page'> 
+    //             <Navbar /> 
+    //             <div className='profile-container'>
+    //                 <div style={{ 
+    //                     display: 'flex', 
+    //                     justifyContent: 'center', 
+    //                     alignItems: 'center', 
+    //                     height: '50vh', 
+    //                     color: 'white', 
+    //                     fontSize: '1.2rem' 
+    //                 }}> 
+    //                 Loading profile... 
+    //                 </div> 
+    //             </div>
+    //         </div>
+    //     ); 
+    // } 
+    // if (!user) { 
+    //     return ( 
+    //         <div className='profile-page'> 
+    //             <Navbar /> 
+    //             <div className='profile-container'>
+    //                 <div style={{
+    //                     display: 'flex', 
+    //                     justifyContent: 'center', 
+    //                     alignItems: 'center', 
+    //                     height: '50vh', 
+    //                     color: 'white', 
+    //                     fontSize: '1.2rem' 
+    //                 }}> 
+    //                 Please log in to view your profile 
+    //                 </div>
+    //             </div>
+    //         </div> 
+    //     ); 
+    // }
+
+
     return (
         <div className='profile-page'>
             <Navbar />
@@ -31,7 +156,7 @@ function ProfilePage() {
                             <div className='edit-icon'> <FiEdit3 /> </div>
                         </div>
                         <div className='username-edit-box'>
-                            <div className='username'>someusername1234</div>
+                            <div className='username'>{user?.username || 'Loading...'}</div>
                             <button 
                                 className='edit-profile-btn'
                                 onClick={() => setIsEditing(! isEditing )}
@@ -41,19 +166,21 @@ function ProfilePage() {
                         </div>
                     </div>
 
+
                     <div className='friends-section'>
                         <div className='friends-header'>
                             <span>Friends</span>
                             <span className='notification-bell'> <IoIosNotificationsOutline /> </span>
                         </div>
-                        <div className='friend-item'>
-                            <div className='friend-avatar'> <CgProfile /> </div>
-                            <span>user1</span>
-                        </div>
-                        <div className='friend-item'>
-                            <div className='friend-avatar'> <CgProfile /> </div>
-                            <span>user2</span>
-                        </div>
+                        {friends.map(friend => (
+                            <div key={friend._id} className='friend-item'>
+                                <div className='friend-avatar'> <CgProfile /> </div>
+                                <span>{friend.username}</span>
+                            </div>
+                        ))}
+                        {friends.length === 0 && (
+                            <div style={{color: 'white', textAlign: 'center', marginTop: '1rem'}}>No friends yet</div>
+                        )}
                     </div>
                 </div>
 
@@ -62,10 +189,15 @@ function ProfilePage() {
                     <div className='quests-header'>
                         <h2>{isEditing ? 'User Info' : 'My Quests'}</h2>
                         { ! isEditing && (
-                            <select className='time-filter'>
-                                <option>Past 7 Days</option>
-                                <option>Past Month</option>
-                                <option>All Quests</option>
+                            <select 
+                                className='time-filter'
+                                value={questFilter}
+                                onChange={handleFilterChange}
+                            >
+                                <option value="all">All Quests</option>
+                                <option value="week">Past 7 Days</option>
+                                <option value="month">Past Month</option>
+                                <option value="favorites">Favorites</option>
                             </select>
                         )}
                     </div>
@@ -119,29 +251,30 @@ function ProfilePage() {
                     ) : ( 
 
                     <div className='quest-grid'>
-                    {/* Quest Card 1 */}
-                    <div className='quest-card'>
-                        <div className='quest-map'>
-                            <div className='map-temp'>map</div>
-                        </div>
-                        <div className='quest-info'>
-                            <div>Completed: 2 days ago</div>
-                            <div>Distance: 3 miles</div>
-                            <button className='share-quest-btn'>Share Quest <IoMdShare /> </button>
-                        </div>
+                        {userQuests.length > 0 ? (
+                            userQuests.map((userQuest) => (
+                                <div key={userQuest._id} className='quest-card'>
+                                    <div className='quest-map'>
+                                        <div className='map-temp'>map</div>
+                                    </div>
+                                    <div className='quest-info'>
+                                        <div>Completed: {new Date(userQuest.completedAt).toLocaleDateString()}</div>
+                                        <div>Distance: {userQuest.quest?.distance || 'N/A'}</div>
+                                        <button className='share-quest-btn'>Share Quest <IoMdShare /> </button>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div style={{ 
+                                color: 'white', 
+                                textAlign: 'center', 
+                                marginTop: '2rem',
+                                fontSize: '1.2rem'
+                            }}>
+                                No quests completed yet! Go explore :)
+                            </div>
+                        )}
                     </div>
-
-                    <div className='quest-card'>
-                        <div className='quest-map'>
-                            <div className='map-temp'>map</div>
-                        </div>
-                        <div className='quest-info'>
-                            <div>Completed: 2 days ago</div>
-                            <div>Distance: 3 miles</div>
-                            <button className='share-quest-btn'>Share Quest <IoMdShare /> </button>
-                        </div>
-                    </div>
-                </div>
 
                     )}
 
