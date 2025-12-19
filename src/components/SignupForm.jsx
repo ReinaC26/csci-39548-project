@@ -56,7 +56,9 @@ function SignupForm() {
         localStorage.setItem("token", data.token);
       }
       alert("Registered successfully!");
-      navigate("/login");
+
+      // Jump to Home after Login processing
+      navigate("/");
     } catch (err) {
       alert(err.message);
     }
