@@ -1,6 +1,56 @@
 .homepage {
     min-height: 100vh;
-    background-color: #1d1d1d;
+    background: linear-gradient(135deg, #0f2027 0%, #f5e5b3 25%, #41768e 50%, #1d1d1d 75%, #1d1d1d 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating particles(the stars) */
+.homepage::before {
+    content: '';
+    position: absolute;
+    inset: 0; /* Shorthand for top/left/width/height 100% */
+    background-image: 
+        /* Tiny distant stars */
+        radial-gradient(1px 1px at 10% 20%, #ffffff 50%, transparent),
+        radial-gradient(1px 1px at 30% 50%, #ffffff 50%, transparent),
+        radial-gradient(1px 1px at 70% 80%, #ffffff 50%, transparent),
+        /* Medium stars */
+        radial-gradient(1.5px 1.5px at 20% 70%, #ffffff 80%, transparent),
+        radial-gradient(1.5px 1.5px at 80% 10%, #ffffff 80%, transparent),
+        radial-gradient(1.5px 1.5px at 45% 15%, #ffffff 80%, transparent),
+        /* Large bright stars with a subtle glow */
+        radial-gradient(2px 2px at 60% 70%, #ffffff, transparent),
+        radial-gradient(2px 2px at 90% 40%, #ffffff, transparent),
+        radial-gradient(2px 2px at 33% 85%, #ffffff, transparent);
+    
+    background-size: 100% 100%;
+    animation: sparkle 8s ease-in-out infinite alternate;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+@keyframes sparkle {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0.4;
+        transform: scale(1.05); 
+    }
 }
 
 /* Typewriter text container */
@@ -10,19 +60,42 @@
     justify-content: center;
     margin-top: 25vh;
     height: 45px;
+    position: relative;
+    z-index: 1;
 }
 
-/* Typewriter text */
+/* Typewriter text with glow effect */
 .typewriter-text {
     font-size: 2.25rem;
     font-family: 'Kode Mono', monospace;
     font-weight: bold;
     color: white;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 30px rgba(192, 219, 228, 0.4);
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+    from {
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.2),
+            0 0 20px rgba(255, 255, 255, 0.6),
+            0 0 30px rgba(192, 219, 228, 0.4);
+    }
+    to {
+        text-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.5),
+            0 0 30px rgba(192, 219, 228, 0.8),
+            0 0 40px rgba(192, 219, 228, 0.6);
+    }
 }
 
 /* Blinking cursor */
 .cursor {
     transition: opacity 0.2s;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
 }
 .cursor.hidden {
     opacity: 0;
@@ -37,20 +110,168 @@
     font-family: 'Kode Mono', monospace;
     color: white;
     padding: 2rem 1rem;
-    margin-left: 37vw;
+    margin-left: 6vw;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.5s both;
 }
 
-.page-button{
-    background-color: #C0DBE4;
-    color: black;
-    border: none;
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced button with hover effects */
+.page-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 1.25rem 2.5rem; 
+    border: 4px solid transparent;
     font-size: 1.5rem;      
     font-family: 'Kode Mono', monospace;
-    font-weight: bold;
+    font-weight: 600;
+    background: linear-gradient(135deg, #C0DBE4 0%, #9BC4D4 100%);
+    color: #1d1d1d;
+    border-radius: 100px;
+    box-shadow: 
+        0 0 0 3px #ffffff,
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
     margin-left: 38vw;
-    box-shadow: 3px 3px 2px rgba(169, 169, 169, 0.88);
-    transition: background-color 0.2s ease-in-out;
+    margin-top: 2vh;
+    z-index: 1;
+    animation: fadeInUp 1s ease-out 1s both;
+}
+
+/* Sparkle effect */
+.page-button-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: sparkleAnimation 2s ease-in-out infinite;
+    z-index: 2;
+}
+
+.page-button-sparkle:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.page-button-sparkle:nth-child(2) {
+    top: 40%;
+    right: 30%;
+    animation-delay: 0.5s;
+}
+
+.page-button-sparkle:nth-child(3) {
+    bottom: 30%;
+    left: 40%;
+    animation-delay: 1s;
+}
+
+@keyframes sparkleAnimation {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Button text */
+.page-button-text {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effects */
+.page-button:hover {
+    transform: scale(1.5);
+    box-shadow: 
+        0 0 0 3px #ffffff,
+        0 12px 30px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5),
+        0 0 25px rgba(192, 219, 228, 0.7);
+}
+
+/* Active/click effect */
+.page-button:active {
+    transform: scale(0.98);
+    box-shadow: 
+        0 0 0 3px #ffffff,
+        0 5px 15px rgba(0, 0, 0, 0.3),
+        inset 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Floating animation for decorative elements */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Add floating circles decoration */
+.homepage::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    top: 10%;
+    right: 10%;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .typewriter-text {
+        font-size: 1.5rem;
+    }
+    
+    .page-content {
+        margin-left: 5vw;
+        font-size: 1.2rem;
+    }
+    
+    .page-button {
+        margin-left: 5vw;
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
 }

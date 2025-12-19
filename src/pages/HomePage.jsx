@@ -46,7 +46,8 @@ function HomePage() {
             className="page-button"
             onClick={() => navigate('/questgenerator')}
             >
-            Generate Adventure
+            <span className="page-button-sparkle"></span>
+            <span className="page-button-text">Generate Adventure</span>
             </button>
         </div>
     );
