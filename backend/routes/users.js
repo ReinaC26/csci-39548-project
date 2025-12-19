@@ -3,6 +3,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const UserQuest = require('../models/UserQuest');
+const Quest = require('../models/Quest');
 const router = express.Router();
 
 // middleware to verify JWT token
@@ -88,6 +90,41 @@ router.get('/friends', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error('Error retrieving friends: ', error);
         res.status(500).json({ success: false, message: 'Server error'});
+    }
+});
+
+// GET /api/users/quests
+// Get user's completed quests (w/ filtering)
+router.get('/quests', authenticateToken, async (req, res) => {
+    try {
+        const { filter = 'all '} = req.query;
+
+        //build filter query
+        let matchQuery = { user: req.userId };
+
+        if (filter === 'week') {
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            matchQuery.completedAt = { $gte: weekAgo };
+        } else if (filter === 'month') {
+            const monthAgo = new Date();
+            monthAgo.setMonth(monthAgo.getMonth() -1);
+            matchQuery.completedAt = { $gte: monthAgo };
+        } else if (filter === 'favorites') {
+            matchQuery.isFavorite = true;
+        }
+
+        const quests = await UserQuest.find(matchQuery)
+            .populate('quest')
+            .sort({ completedAt: -1 })
+            .limit(10);
+        res.json({
+            success: true,
+            quests
+        });
+    } catch (error) {
+        console.error('Error retrieving user quests: ', error);
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 
