@@ -4,20 +4,15 @@ import "./Login.css";
 function SignupForm() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [matchPassword, setMatchPassword] = useState("");
+  const [isMatch, setIsMatch] = useState(null);
 
   // check between password and confirm password
   useEffect(() => {
     if (!confirm) {
-      setMatchPassword("");
+      setIsMatch(null);
       return;
     }
-
-    if (password === confirm) {
-      setMatchPassword("match");
-    } else {
-      setMatchPassword("mismatch");
-    }
+    setIsMatch(password === confirm);
   }, [password, confirm]);
 
   return (
@@ -49,14 +44,14 @@ function SignupForm() {
         required
       />
 
-      {matchPassword === "mismatch" && (
+      {isMatch === false && (
         <p
           style={{ color: "#e74c3c", fontSize: "0.9rem", marginTop: "0.3rem" }}
         >
           ❌ Passwords do not match
         </p>
       )}
-      {matchPassword === "match" && (
+      {isMatch === true && (
         <p
           style={{ color: "#27ae60", fontSize: "0.9rem", marginTop: "0.3rem" }}
         >
