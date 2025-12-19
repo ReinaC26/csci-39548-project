@@ -5,7 +5,7 @@ import Signup from "../components/Signup";
 
 function SignupPage() {
   return (
-    <div>
+    <div className="bg-[#1d1d1d]">
       <Navbar />
       <Signup />
     </div>

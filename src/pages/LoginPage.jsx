@@ -5,7 +5,7 @@ import Login from "../components/Login";
 
 function LoginPage() {
   return (
-    <div>
+    <div className="bg-[#1d1d1d]">
       <Navbar />
       <Login />
     </div>
