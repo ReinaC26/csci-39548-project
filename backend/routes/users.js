@@ -128,4 +128,53 @@ router.get('/quests', authenticateToken, async (req, res) => {
     }
 });
 
+// POST /api/users/quest/:questId/complete
+// Mark a quest as completed
+router.post('/quests/:questId/complete', authenticateToken, async (req, res) => {
+    try {
+        const { questId } = req.params;
+
+        // check if quest exists...
+        const quest = await Quest.findById(questId);
+        if (!quest) {
+            return res.status(404).json({ success: false, message: 'Quest not found'});
+
+        }
+        // check if quest already completed this quest
+        const existingCompletion = await UserQuest.findOne({
+            user: req.userId,
+            quest: questId
+        });
+
+        if (existingCompletion) {
+            return res.status(409).json({
+                success: false,
+                message: 'Quest already completed'
+            });
+        }
+
+        // create new completion record..
+        const userQuest = new UserQuest({ 
+            user: req.userId,
+            quest: questId
+        });
+
+        await userQuest.save();
+
+        //update user quest count..
+        const user = await User.findById(req.userId);
+        user.questsCompleted += 1;
+        await user.save();
+
+        res.json({ 
+            success: true,
+            message: 'Quest completed successfully!',
+            userQuest
+        });
+    } catch(error) {
+        console.error('Error completing quest: ', error);
+        res.status(500).json({ success: false, message: 'Server error'})
+    }
+});
+
 module.exports = router;
