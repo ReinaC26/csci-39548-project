@@ -1,52 +1,63 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5002;
 
-//const uri = process.env.MONGODB_URI;
+// Only requests from this address are accepted
+const allowedOrigins = process.env.CLIENT_URL.split(",");
 
 // MIDDLEWARE
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // MONGODB.
-mongoose.connect(process.env.MONGODB_URI)
+mongoose
+  .connect(process.env.MONGODB_URI)
 
-.then(() => console.log('Yayyyy hi mongodb wooo'))
-.catch((err) => console.error('AHHHhhhhh something went wrong boooo ', err)); 
-
+  .then(() => console.log("Yayyyy hi mongodb wooo"))
+  .catch((err) => console.error("AHHHhhhhh something went wrong boooo ", err));
 
 // We test the routes in this household!@!!!!!!!!
-app.get('/', (req, res) => {
-    res.json({ message: 'WE HAVE A BACKEND FOLKS!!!!!!!!!' });
+app.get("/", (req, res) => {
+  res.json({ message: "WE HAVE A BACKEND FOLKS!!!!!!!!!" });
 });
 
 // API ROUTES TBD
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/quests', require('./routes/quests'));
-app.use('/api/feedback', require('./routes/feedback'));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/users"));
+app.use("/api/quests", require("./routes/quests"));
+app.use("/api/feedback", require("./routes/feedback"));
 
-//error handeling 
+//error handeling
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'boooooooo somethings wrong', error: err.message });
+  console.error(err.stack);
+  res
+    .status(500)
+    .json({ message: "boooooooo somethings wrong", error: err.message });
 });
 
 // 404
 app.use((req, res) => {
-    res.status(404).json({message: 'BOO 404'});
+  res.status(404).json({ message: "BOO 404" });
 });
 app.listen(PORT, () => {
-    console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
-})
+  console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
+});
 
 module.exports = app;
