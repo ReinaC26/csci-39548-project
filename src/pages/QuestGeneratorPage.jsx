@@ -172,7 +172,7 @@ function QuestGeneratorPage() {
                             }}
                         />
                     </div>
-                    <div className="customize-slider" style={{ width: '90%' }}>
+                    <div className="customize-slider-container" style={{ width: '90%' }}>
                         <input 
                             type="range" 
                             min="0" 
@@ -220,7 +220,7 @@ function QuestGeneratorPage() {
                               }}
                         />
                     </div>
-                    <div className="customize-slider" style={{ width: '90%' }}>
+                    <div className="customize-slider-container">
                         <input
                             type="range"
                             min="0"
