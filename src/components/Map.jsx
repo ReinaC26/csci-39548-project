@@ -10,7 +10,7 @@ function MapDisplay({ width, height }) {
         libraries: libraries,
     });
 
-    // Define the initial center point for the map (e.g., New York)
+    // Define the initial center point for the map (New York)
     const center = useMemo(() => ({ lat: 40.7128, lng: -74.0060 }), []);
     
     const options = useMemo(() => ({
