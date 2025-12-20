@@ -217,8 +217,10 @@ function ProfilePage() {
                             <div className='friend-requests-popup'>
                                 {/* HEADER */}
                                 <div className='requests-header'>
-                                    <h4>Friend Request</h4>
-                                    <div className='requests-tabs'>
+                                    <h4>Friend Requests</h4>
+                                    <button className='close-button' onClick={() => setShowRequests(false)}>×</button>
+                                </div>
+                                <div className='requests-tabs'>
                                         <span 
                                             className={activeRequestTab === 'received' ? 'active' : ''}
                                             onClick={() => setActiveRequestTab('received')}
@@ -230,7 +232,6 @@ function ProfilePage() {
                                         
                                         >Sent</span>
                                     </div>
-                                </div>
                                 {/* CONTENT */}
                                 <div className="requests-content">
                                     {activeRequestTab === 'received' && (
