@@ -129,44 +129,102 @@ function ProfilePage() {
         loadQuests(newFilter);
     };
 
-    // if (loading) { 
-    //     return ( 
-    //         <div className='profile-page'> 
-    //             <Navbar /> 
-    //             <div className='profile-container'>
-    //                 <div style={{ 
-    //                     display: 'flex', 
-    //                     justifyContent: 'center', 
-    //                     alignItems: 'center', 
-    //                     height: '50vh', 
-    //                     color: 'white', 
-    //                     fontSize: '1.2rem' 
-    //                 }}> 
-    //                 Loading profile... 
-    //                 </div> 
-    //             </div>
-    //         </div>
-    //     ); 
-    // } 
-    // if (!user) { 
-    //     return ( 
-    //         <div className='profile-page'> 
-    //             <Navbar /> 
-    //             <div className='profile-container'>
-    //                 <div style={{
-    //                     display: 'flex', 
-    //                     justifyContent: 'center', 
-    //                     alignItems: 'center', 
-    //                     height: '50vh', 
-    //                     color: 'white', 
-    //                     fontSize: '1.2rem' 
-    //                 }}> 
-    //                 Please log in to view your profile 
-    //                 </div>
-    //             </div>
-    //         </div> 
-    //     ); 
-    // }
+    const handleSaveProfile = async () => {
+        try {
+            const response = await apiRequest('/api/users/profile', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    username: userInfo.username,
+                    email: userInfo.email,
+                    bio: userInfo.bio
+                })
+            });
+            //update user & userInfo state..
+            setUser(response.user);
+            setUserInfo({
+                username:response.user.username,
+                email: response.user.email,
+                bio: response.user.bio || ''
+            });
+            localStorage.setItem('user', JSON.stringify(response.user));
+            alert('Pofile updated successfully!');
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Failed to save profile: ', error);
+            alert('Failed to save profile. Please try again.');
+        }
+    };
+
+    const handleAvatarUpload = async (file = avatarFile) =>{
+        if (!file) {
+            alert('Please select an image first');
+            return;
+        }
+        try {
+            const formData = new FormData();
+            formData.append('avatar', file);
+            const token = getToken();
+            const response = await fetch('http://localhost:5002/api/users/avatar', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}`},
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Image uploaded successfully: ', result);
+
+            //update user image in state..
+            setUser(prev => ({ ...prev, avatar: result.avatarUrl }));
+            setAvatarFile(null);
+            alert('Profile picture updated successfully!');
+        } catch (error) {
+            console.error('Failed to upload image: ', error);
+            alert('Failed to upload image. Please try again.');
+        }
+    };
+
+    if (loading) { 
+        return ( 
+            <div className='profile-page'> 
+                <Navbar /> 
+                <div className='profile-container'>
+                    <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        height: '50vh', 
+                        color: 'white', 
+                        fontSize: '1.2rem' 
+                    }}> 
+                    Loading profile... 
+                    </div> 
+                </div>
+            </div>
+        ); 
+    } 
+    if (!user) { 
+        return ( 
+            <div className='profile-page'> 
+                <Navbar /> 
+                <div className='profile-container'>
+                    <div style={{
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        height: '50vh', 
+                        color: 'white', 
+                        fontSize: '1.2rem' 
+                    }}> 
+                    Please log in to view your profile 
+                    </div>
+                </div>
+            </div> 
+        ); 
+    }
 
 
     return (
@@ -177,9 +235,24 @@ function ProfilePage() {
                 <div className='left-sidebar'>
 
                     <div className='user-profile-section'>
-                        <div className='profile-avatar'>
+                    <div className='profile-avatar'>
+                        {user?.avatar ? (
+                            <img 
+                                src={`http://localhost:5002${user.avatar}`} 
+                                alt="Profile Avatar" 
+                                className='avatar-temp'
+                                style={{
+                                    width: '80px',
+                                    height: '80px',
+                                    borderRadius: '50%',
+                                    objectFit: 'cover',
+                                    fontSize: '0' // Remove any text styles
+                                }}
+                            />
+                        ) : (
                             <div className='avatar-temp'> <CgProfile /> </div>
-                            <div className='edit-icon' onClick={() => fileInputRef.current.click()}> <FiEdit3 /> </div>
+                        )}
+                        <div className='edit-icon' onClick={() => fileInputRef.current.click()}> <FiEdit3 /> </div>
                             <input 
                                 type='file'
                                 accept='image/*'
@@ -189,6 +262,9 @@ function ProfilePage() {
                                     const file = e.target.files[0];
                                     console.log(file);
                                     setAvatarFile(file);
+                                    if (file) {
+                                        if (window.confirm('Confirm new profile picture?')) { handleAvatarUpload(file); }
+                                    }
                                 }}
                             />
                         </div>
@@ -350,6 +426,9 @@ function ProfilePage() {
                                 <button className='back-btn' onClick={() => setIsEditing(false)}>
                                     Back
                                 </button>
+                                <button className='back-btn' style={{ backgroundColor: '#0B556C' }} onClick={handleSaveProfile} >
+                                    Save
+                                </button>
                             </div>
                         </div>
 
@@ -376,7 +455,7 @@ function ProfilePage() {
                                 marginTop: '2rem',
                                 fontSize: '1.2rem'
                             }}>
-                                No quests completed yet! Go explore :)
+                                No quests yet! Go explore :)
                             </div>
                         )}
                     </div>
