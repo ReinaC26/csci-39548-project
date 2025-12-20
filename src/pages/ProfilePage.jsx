@@ -154,14 +154,14 @@ function ProfilePage() {
         }
     };
 
-    const handleAvatarUpload = async () =>{
-        if (!avatarFile) {
+    const handleAvatarUpload = async (file = avatarFile) =>{
+        if (!file) {
             alert('Please select an image first');
             return;
         }
         try {
             const formData = new FormData();
-            formData.append('avatar', avatarFile);
+            formData.append('avatar', file);
             const token = getToken();
             const response = await fetch('http://localhost:5002/api/users/avatar', {
                 method: 'POST',
@@ -234,9 +234,24 @@ function ProfilePage() {
                 <div className='left-sidebar'>
 
                     <div className='user-profile-section'>
-                        <div className='profile-avatar'>
+                    <div className='profile-avatar'>
+                        {user?.avatar ? (
+                            <img 
+                                src={`http://localhost:5002${user.avatar}`} 
+                                alt="Profile Avatar" 
+                                className='avatar-temp'
+                                style={{
+                                    width: '80px',
+                                    height: '80px',
+                                    borderRadius: '50%',
+                                    objectFit: 'cover',
+                                    fontSize: '0' // Remove any text styles
+                                }}
+                            />
+                        ) : (
                             <div className='avatar-temp'> <CgProfile /> </div>
-                            <div className='edit-icon' onClick={() => fileInputRef.current.click()}> <FiEdit3 /> </div>
+                        )}
+                        <div className='edit-icon' onClick={() => fileInputRef.current.click()}> <FiEdit3 /> </div>
                             <input 
                                 type='file'
                                 accept='image/*'
@@ -247,7 +262,7 @@ function ProfilePage() {
                                     console.log(file);
                                     setAvatarFile(file);
                                     if (file) {
-                                        if (window.confirm('Confirm new profile picture?')) { handleAvatarUpload(); }
+                                        if (window.confirm('Confirm new profile picture?')) { handleAvatarUpload(file); }
                                     }
                                 }}
                             />
