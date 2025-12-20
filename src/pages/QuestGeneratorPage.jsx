@@ -94,6 +94,32 @@ function QuestGeneratorPage() {
         }
     };
 
+    // save completed quest to user's profile
+    const handleQuestComplete = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log('No token found, user not logged in');
+                setShowFeedbackForm(true); // show feedback anyways
+                return;
+            }
+            const response = await fetch(`http://localhost:5002/api/users/quests/${generatedQuest._id}/complete`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.ok) {
+                console.log('Quest saved to profile successfully!');
+            }
+        } catch (error) {
+            console.log('Error saving quest: ', error);
+        }
+        // show feedback form regarless of save result
+        setShowFeedbackForm(true);
+    };
+
     return (
         <div className="generator-page">
             <Navbar />
@@ -307,7 +333,7 @@ function QuestGeneratorPage() {
                         </div>
                         <div 
                             className="quest-complete-btn"
-                            onClick={() => generatedQuest && !isLoading && setShowFeedbackForm(true)}
+                            onClick={() => generatedQuest && !isLoading && handleQuestComplete()}
                             disabled={isLoading || !generatedQuest}
                             style={{ 
                                 opacity: generatedQuest && !isLoading ? 1 : 0.5, 
