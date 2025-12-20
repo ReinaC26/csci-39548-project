@@ -429,6 +429,8 @@
 
 .show-location-btn{
     display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: white;
     height: 30px;
     width: 30px;
