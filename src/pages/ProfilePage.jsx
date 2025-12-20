@@ -242,8 +242,8 @@ function ProfilePage() {
                                 alt="Profile Avatar" 
                                 className='avatar-temp'
                                 style={{
-                                    width: '80px',
-                                    height: '80px',
+                                    width: '120px',
+                                    height: '120px',
                                     borderRadius: '50%',
                                     objectFit: 'cover',
                                     fontSize: '0' // Remove any text styles
