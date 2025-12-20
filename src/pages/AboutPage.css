@@ -4,7 +4,7 @@
     background: linear-gradient(#0f2027 0%, #C0DBE4 10%, #2c5364 50%, #1a3a52 75%, #1d1d1d 100%);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-    position: relative;
+    position: flex;
     padding-bottom: 3rem;   
 }
 .about-page::before {
