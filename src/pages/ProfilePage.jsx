@@ -146,6 +146,7 @@ function ProfilePage() {
                 email: response.user.email,
                 bio: response.user.bio || ''
             });
+            localStorage.setItem('user', JSON.stringify(response.user));
             alert('Pofile updated successfully!');
             setIsEditing(false);
         } catch (error) {
