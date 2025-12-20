@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import './ProfilePage.css';
 
@@ -18,6 +18,16 @@ function ProfilePage() {
     const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
     const [questFilter, setQuestFilter] = useState('all');
+    const [avatarFile, setAvatarFile] = useState(null);
+    const [isEditingAvatar, setEditingAvatar] =  useState(false);
+    const fileInputRef = useRef(null);
+    
+    // notifications & friend reqs
+    const [showRequests, setShowRequests] = useState(false);
+    const [activeRequestTab, setActiveRequestTab] = useState('received');
+    const [receivedRequests, setReceivedRequests] = useState([]);
+    const [sentRequests, setSentRequests] = useState([]);
+    
 
     const [userInfo, setUserInfo] = useState({
         username: '',
@@ -77,6 +87,22 @@ function ProfilePage() {
             setUserQuests(response.quests || []);
         } catch (error) {
             console.error('Failed to load quests: ', error);
+        }
+    };
+
+    // api loader function for fwendz :)
+    const loadFriendRequests = async () => {
+        try {
+            const [receivedRes, sentRes] = await Promise.all([
+                apiRequest('/api/friends/request/received'),
+                apiRequest('/api/friends/request/sent')
+            ]);
+            setReceivedRequests(receivedRes.requests || []); 
+            setSentRequests(sentRes.requests || []);
+
+
+        } catch (error) {
+            console.error('Failed to load friend requests, error: ', error);
         }
     };
 
@@ -153,7 +179,18 @@ function ProfilePage() {
                     <div className='user-profile-section'>
                         <div className='profile-avatar'>
                             <div className='avatar-temp'> <CgProfile /> </div>
-                            <div className='edit-icon'> <FiEdit3 /> </div>
+                            <div className='edit-icon' onClick={() => fileInputRef.current.click()}> <FiEdit3 /> </div>
+                            <input 
+                                type='file'
+                                accept='image/*'
+                                ref={fileInputRef}
+                                style={{display: 'none'}}
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    console.log(file);
+                                    setAvatarFile(file);
+                                }}
+                            />
                         </div>
                         <div className='username-edit-box'>
                             <div className='username'>{user?.username || 'Loading...'}</div>
@@ -170,8 +207,75 @@ function ProfilePage() {
                     <div className='friends-section'>
                         <div className='friends-header'>
                             <span>Friends</span>
-                            <span className='notification-bell'> <IoIosNotificationsOutline /> </span>
+                            <span className='notification-bell'
+                            onClick={() =>{
+                                setShowRequests(prev => !prev);
+                                if(!showRequests) { loadFriendRequests(); }
+                            }}> <IoIosNotificationsOutline /> </span>
                         </div>
+                        {showRequests && (
+                            <div className='friend-requests-popup'>
+                                {/* HEADER */}
+                                <div className='requests-header'>
+                                    <h4>Friend Request</h4>
+                                    <div className='requests-tabs'>
+                                        <span 
+                                            className={activeRequestTab === 'received' ? 'active' : ''}
+                                            onClick={() => setActiveRequestTab('received')}
+                                        >Received</span>
+                                        <span>|</span>
+                                        <span 
+                                            className={activeRequestTab === 'sent' ? 'active' : '' }
+                                            onClick={() => setActiveRequestTab('sent')}
+                                        
+                                        >Sent</span>
+                                    </div>
+                                </div>
+                                {/* CONTENT */}
+                                <div className="requests-content">
+                                    {activeRequestTab === 'received' && (
+                                        <>
+                                            {receivedRequests.length === 0 ? (
+                                                <div className="empty-state">No received requests</div>
+                                            ) : (
+                                                receivedRequests.map(req => (
+                                                    <div key={req._id} className="request-item">
+                                                        <CgProfile />
+                                                        <div className="request-info">
+                                                            <div>{req.from.username}</div>
+                                                            <small>Sent you a friend request</small>
+                                                        </div>
+                                                        <div className="request-actions">
+                                                            <button onClick={() => console.log('accept', req._id)}>✔</button>
+                                                            <button onClick={() => console.log('decline', req._id)}>✖</button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </>
+                                    )}
+
+                                    {activeRequestTab === 'sent' && (
+                                        <>
+                                            {sentRequests.length === 0 ? (
+                                                <div className="empty-state">No sent requests</div>
+                                            ) : (
+                                                sentRequests.map(req => (
+                                                    <div key={req._id} className="request-item">
+                                                        <CgProfile />
+                                                        <div className="request-info">
+                                                            <div>{req.to.username}</div>
+                                                            <small>Request sent</small>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                                    
+                            </div>
+                        )}
                         {friends.map(friend => (
                             <div key={friend._id} className='friend-item'>
                                 <div className='friend-avatar'> <CgProfile /> </div>
