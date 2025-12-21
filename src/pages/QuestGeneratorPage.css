@@ -486,7 +486,6 @@
 }
 
 .quest-complete-btn::before {
-    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -524,10 +523,10 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
+    z-index: 999;
 }
 
 .regenerate-btn::before {
-    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -631,26 +630,4 @@
     font-size: 13px;
     text-align: justify;
     color: #333;
-}
-
-.quest-edit-btn {
-    display: flex;
-    background: linear-gradient(135deg, #0B617C 0%, #095570 100%);
-    color: white;
-    font-family: 'Kode Mono', monospace;
-    height: 35px;
-    width: 120px;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-    margin-top: 1rem;
-}
-
-.quest-edit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #0D748F 0%, #0B6580 100%);
 }

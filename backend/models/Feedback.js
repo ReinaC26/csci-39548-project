@@ -19,6 +19,11 @@ const feedbackSchema = new mongoose.Schema({
     image: {
         type: String // URL or base64 string
     },
+    questId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Quest',
+        required: false 
+    },
     createdAt: { type: Date, default: Date.now }
 });
 

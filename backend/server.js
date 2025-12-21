@@ -59,5 +59,8 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
 });
+// Increase payload size limit
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 module.exports = app;

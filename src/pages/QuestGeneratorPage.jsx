@@ -17,6 +17,8 @@ function QuestGeneratorPage() {
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
     const [showRoute, setShowRoute] = useState(false);
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const handleDistanceSliderChange = (event) => {
         setDistance(event.target.value);
     };
@@ -341,6 +343,7 @@ function QuestGeneratorPage() {
                                     style={{ 
                                         opacity: generatedQuest ? 1 : 0.5, 
                                         cursor: generatedQuest ? 'pointer' : 'not-allowed'
+                                        
                                     }}
                                 >
                                     Edit Quest
@@ -367,6 +370,7 @@ function QuestGeneratorPage() {
             <FeedbackForm 
                 isOpen={showFeedbackForm} 
                 onClose={() => setShowFeedbackForm(false)}
+                userId={user?._id}
                 questId={generatedQuest?._id}
                 onSubmitSuccess={() => {
                     setGeneratedQuest(null);
