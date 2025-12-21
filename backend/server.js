@@ -52,6 +52,9 @@ app.use((err, req, res, next) => {
     .json({ message: "boooooooo somethings wrong", error: err.message });
 });
 
+app.use('/uploads', express.static('uploads'));
+
+
 // 404
 app.use((req, res) => {
   res.status(404).json({ message: "BOO 404" });
