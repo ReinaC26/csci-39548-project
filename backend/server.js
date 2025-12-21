@@ -38,6 +38,10 @@ app.get("/", (req, res) => {
   res.json({ message: "WE HAVE A BACKEND FOLKS!!!!!!!!!" });
 });
 
+// Increase payload size limit
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 // API ROUTES TBD
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
@@ -62,8 +66,6 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`server up and runnnnninggggggggggggg on ${PORT}`);
 });
-// Increase payload size limit
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 
 module.exports = app;

@@ -17,7 +17,14 @@ function QuestGeneratorPage() {
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
     const [showRoute, setShowRoute] = useState(false);
 
-    const user = JSON.parse(localStorage.getItem('user'));
+    let user = null;
+    try {
+        const storedUser = localStorage.getItem('user');
+        user = storedUser ? JSON.parse(storedUser) : null;
+    } catch (e) {
+        console.error('Failed to parse user from localStorage', e);
+        user = null;
+    }
 
     const handleDistanceSliderChange = (event) => {
         setDistance(event.target.value);
