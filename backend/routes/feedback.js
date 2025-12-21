@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const Feedback = require('../models/Feedback');
 const router = express.Router();
@@ -29,7 +30,7 @@ router.get('/:id', async (req, res) => {
 // POST add new feedback
 router.post('/', async (req, res) => {
     try {
-        const { userId, rate, comment, image } = req.body;
+        const { userId, rate, comment, image, questId} = req.body;
 
         // validate
         if (!userId || !rate || !comment) {
@@ -40,7 +41,8 @@ router.post('/', async (req, res) => {
             userId,
             rate,
             comment,
-            image
+            image,
+            questId
         });
 
         await feedback.save();

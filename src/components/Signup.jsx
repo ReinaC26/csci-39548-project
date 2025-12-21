@@ -4,7 +4,7 @@ import SignupForm from "./SignupForm";
 
 function Signup() {
   const bgStyle = {
-    backgroundImage: `url(${process.env.PUBLIC_URL}/LoginBackground.png)`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${process.env.PUBLIC_URL}/LoginBackground.png)`,
   };
 
   return (

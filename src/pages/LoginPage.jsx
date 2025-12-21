@@ -5,7 +5,7 @@ import Login from "../components/Login";
 
 function LoginPage() {
   return (
-    <div className="bg-[#1d1d1d]">
+    <div className="min-h-screen animate-gradientShift bg-[linear-gradient(#0f2027_0%,#1d1d1d_50%,#1d1d1d_75%,#1d1d1d_100%)] bg-[length:400%_400%]">
       <Navbar />
       <Login />
     </div>

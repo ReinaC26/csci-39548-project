@@ -53,9 +53,14 @@ router.post('/', async (req, res) => {
                 For the "description" field:
                     1. Write it as a narrative journey (e.g., "Walk past the old clock tower and look for the hidden alley...").
                     2. Incorporate specific landmarks, architectural details, or "hidden gems" related to the theme.
-                    3. Break the journey into clear phases: the beginning, the middle transition, and the approach to the destination.
+                    3. 
+                        Divide the journey into three numbered phases. Use the following format strictly, leave empty spaces between each phase:
+                            1. Start: [Details here]
+                            2. Next Step: [Details here]
+                            3. Arrival at Destination: [Details here]
+
                     4. Match the tone to the user's theme if they add any (e.g., spooky, historical, or academic).
-                    5. Total length should be around 2 descriptive paragraphs.
+                    5. Each phase should consist of 1 short, focused paragraph.
         `;
 
         const result = await model.generateContent({

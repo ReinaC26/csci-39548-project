@@ -50,6 +50,14 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border: 2px solid #76a3ca;
+  box-shadow: 0 0 15px rgba(189, 224, 254, 0.5);
+  transform: translateY(-2px);
 }
 
 .login-btn {

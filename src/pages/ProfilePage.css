@@ -2,7 +2,10 @@
 
 .profile-page {
     min-height: 100vh;
-    background-color: #1d1d1d;
+    background: #1d1d1d;
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
 }
 
 .profile-container {

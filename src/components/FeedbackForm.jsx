@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function FeedbackForm({ isOpen, onClose, questId, onSubmitSuccess }) {
+function FeedbackForm({ isOpen, onClose, userId, questId, onSubmitSuccess }) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -37,7 +37,7 @@ function FeedbackForm({ isOpen, onClose, questId, onSubmitSuccess }) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    userId: '000000000000000000000000', // Replace with actual user ID from auth
+                    userId: userId,
                     rate: rating,
                     comment,
                     image: image || '',

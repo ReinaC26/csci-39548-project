@@ -15,6 +15,16 @@ function QuestGeneratorPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+    const [showRoute, setShowRoute] = useState(false);
+
+    let user = null;
+    try {
+        const storedUser = localStorage.getItem('user');
+        user = storedUser ? JSON.parse(storedUser) : null;
+    } catch (e) {
+        console.error('Failed to parse user from localStorage', e);
+        user = null;
+    }
 
     const handleDistanceSliderChange = (event) => {
         setDistance(event.target.value);
@@ -24,10 +34,9 @@ function QuestGeneratorPage() {
         setDuration(Number(event.target.value));
     };
 
-    // Validate required fields
     const validateForm = () => {
         if (isRandomMode) {
-            return true; // No validation needed for random mode
+            return true;
         }
         
         if (!startLocation.trim()) {
@@ -43,9 +52,10 @@ function QuestGeneratorPage() {
         return true;
     };
 
-    // API call to create quest
     const handleCreateQuest = async () => {
         setError('');
+        setGeneratedQuest(null);
+        setShowRoute(false); // Reset route when creating new quest
         
         if (!validateForm()) {
             return;
@@ -56,11 +66,11 @@ function QuestGeneratorPage() {
         try {
             const requestBody = isRandomMode 
                 ? { 
-                    distance: '5 mi',
-                    duration: '1 hr',
-                    startLocation: 'Random location in New York City',
-                    endLocation: 'Random location in New York City',
-                    description: 'surprise adventure'
+                    distance: 'random miles depending on start and end locations',
+                    duration: 'random duration depending on distance',
+                    startLocation: 'Random location in any borough of New York City',
+                    endLocation: 'Random location in any borough of New York City',
+                    description: 'surprise adventure',
                   }
                 : {
                     distance: `${distance} mi`,
@@ -120,6 +130,10 @@ function QuestGeneratorPage() {
         setShowFeedbackForm(true);
     };
 
+    const toggleRoute = () => {
+        setShowRoute(!showRoute);
+    };
+
     return (
         <div className="generator-page">
             <Navbar />
@@ -130,6 +144,7 @@ function QuestGeneratorPage() {
                     <button className="back-btn" onClick={() => {
                         setGeneratedQuest(null);
                         setIsRandomMode(false);
+                        setShowRoute(false);
                     }}>
                         Back
                     </button>
@@ -198,14 +213,13 @@ function QuestGeneratorPage() {
                             }}
                         />
                     </div>
-                    <div className="customize-slider" style={{ width: '90%' }}>
+                    <div className="customize-slider-container">
                         <input 
                             type="range" 
                             min="0" 
                             max="100" 
                             value={distance} 
                             step="1" 
-                            id="customize-slider"
                             className="customize-slider"
                             onChange={handleDistanceSliderChange} 
                         />
@@ -246,19 +260,17 @@ function QuestGeneratorPage() {
                               }}
                         />
                     </div>
-                    <div className="customize-slider" style={{ width: '90%' }}>
+                    <div className="customize-slider-container">
                         <input
                             type="range"
                             min="0"
                             max="5.01"
                             value={duration}
                             step="0.015"
-                            id="customize-slider"
                             className="customize-slider"
                             onChange={handleDurationSliderChange}
                         />
                     </div>
-
                     {/* Customize start/end location */}
                     <div className="start-location">*Start Location</div>
                     <input 
@@ -304,16 +316,28 @@ function QuestGeneratorPage() {
                     </>
                     )}
                 </div>
-
                     
                 <div className="right-container">
                     <div className="right-title">Journey</div>               
                     <Map 
                         width="100%" 
-                        height="85vh" 
+                        height="85vh"
+                        startLocation={generatedQuest?.startLocation}
+                        endLocation={generatedQuest?.endLocation}
+                        showRoute={showRoute}
                     />
                     <div className="show-location-container">
-                        <div className="show-location-btn"></div>
+                        <div 
+                            className="show-location-btn"
+                            onClick={toggleRoute}
+                            style={{
+                                backgroundColor: showRoute ? '#0B556C' : 'white',
+                                cursor: generatedQuest ? 'pointer' : 'not-allowed',
+                                opacity: generatedQuest ? 1 : 0.5
+                            }}
+                        >
+                            {showRoute && <span style={{ color: 'white', fontSize: '20px' }}>✓</span>}
+                        </div>
                         <div className="location-btn-label">
                             Show Start and End Locations
                             <div className="location-icon-container">
@@ -333,8 +357,7 @@ function QuestGeneratorPage() {
                         </div>
                         <div 
                             className="quest-complete-btn"
-                            onClick={() => generatedQuest && !isLoading && handleQuestComplete()}
-                            disabled={isLoading || !generatedQuest}
+                            onClick={() => generatedQuest && !isLoading && setShowFeedbackForm(true)}
                             style={{ 
                                 opacity: generatedQuest && !isLoading ? 1 : 0.5, 
                                 cursor: generatedQuest && !isLoading ? 'pointer' : 'not-allowed' 
@@ -343,22 +366,32 @@ function QuestGeneratorPage() {
                             Quest Complete!
                         </div>
                         <div className="regenerate-btn">
-                        {!isRandomMode ? (
+                            {!isRandomMode ? (
                                 <button 
-                                    onClick={() => setGeneratedQuest(null)}
+                                    onClick={() => {
+                                        setGeneratedQuest(null);
+                                        setShowRoute(false);
+                                    }}
                                     disabled={!generatedQuest}
                                     style={{ 
                                         opacity: generatedQuest ? 1 : 0.5, 
-                                        cursor: generatedQuest ? 'pointer' : 'not-allowed' 
+                                        cursor: generatedQuest ? 'pointer' : 'not-allowed'
+                                        
                                     }}
                                 >
                                     Edit Quest
                                 </button>
                             ) : (
                                 <button 
-                                    onClick={handleCreateQuest}
-                                    disabled={isLoading || !generatedQuest}
-                                    style={{ opacity: generatedQuest && !isLoading ? 1 : 0.5, cursor: generatedQuest && !isLoading ? 'pointer' : 'not-allowed' }}
+                                    onClick={() => {
+                                        if (generatedQuest && !isLoading) {
+                                            handleCreateQuest();
+                                        }
+                                    }}
+                                    style={{ 
+                                        opacity: generatedQuest && !isLoading ? 1 : 0.5, 
+                                        cursor: generatedQuest && !isLoading ? 'pointer' : 'not-allowed'
+                                    }}
                                 >
                                     {isLoading ? "Loading..." : "Regenerate"}   
                                 </button>
@@ -370,10 +403,12 @@ function QuestGeneratorPage() {
             <FeedbackForm 
                 isOpen={showFeedbackForm} 
                 onClose={() => setShowFeedbackForm(false)}
+                userId={user?._id}
                 questId={generatedQuest?._id}
                 onSubmitSuccess={() => {
                     setGeneratedQuest(null);
                     setIsRandomMode(false);
+                    setShowRoute(false);
                 }}
             />
         </div>
