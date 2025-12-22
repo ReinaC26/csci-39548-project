@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Map from '../components/Map';
 import FeedbackForm from '../components/FeedbackForm';
 import './QuestGeneratorPage.css';
 
-function QuestGeneratorPage() {
+function QuestGeneratorPage({ initialQuest = null, readOnly = false, sender = null}) {
     const [distance, setDistance] = useState(50);
     const [duration, setDuration] = useState(2);
     const [isRandomMode, setIsRandomMode] = useState(false);
@@ -16,6 +16,12 @@ function QuestGeneratorPage() {
     const [error, setError] = useState('');
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
     const [showRoute, setShowRoute] = useState(false);
+
+    useEffect(() => {
+        if (initialQuest) {
+          setGeneratedQuest(initialQuest);
+        }
+      }, [initialQuest]);
 
     let user = null;
     try {
@@ -150,7 +156,10 @@ function QuestGeneratorPage() {
                     </button>
                     
                         <div className="quest-result-card">
-                            <div className="left-title">Your Quest</div>
+                            <div className="left-title">
+                             {readOnly
+                                ? `${sender ? `${sender}'s` : "Shared"} Quest`: "Your Quest"}
+                            </div>
                             <div className="quest-details-container">
                                 <div className="quest-section">
                                     <p><strong>Start Location:</strong> {generatedQuest.startLocation}</p>
@@ -357,7 +366,7 @@ function QuestGeneratorPage() {
                         </div>
                         <div 
                             className="quest-complete-btn"
-                            onClick={() => generatedQuest && !isLoading && setShowFeedbackForm(true)}
+                            onClick={() => generatedQuest && !isLoading && handleQuestComplete()}
                             style={{ 
                                 opacity: generatedQuest && !isLoading ? 1 : 0.5, 
                                 cursor: generatedQuest && !isLoading ? 'pointer' : 'not-allowed' 
