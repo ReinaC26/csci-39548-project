@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
 import "./ProfilePage.css";
+import Map from '../components/Map';
 
 // icons ...
 import { FiEdit3, FiChevronDown } from "react-icons/fi";
@@ -18,6 +19,7 @@ function ProfilePage() {
   const [avatarFile, setAvatarFile] = useState(null);
   const [isEditingAvatar, setEditingAvatar] = useState(false);
   const fileInputRef = useRef(null);
+
 
   // notifications & friend reqs
   const [showRequests, setShowRequests] = useState(false);
@@ -589,8 +591,14 @@ function ProfilePage() {
                 userQuests.map((userQuest) => (
                   <div key={userQuest._id} className="quest-card">
                     <div className="quest-map">
-                      <div className="map-temp">map</div>
-                    </div>
+                      <Map
+                        width="150px"
+                        height="100px"
+                        startLocation={userQuest.startLocation}
+                        endLocation={userQuest.endLocation}
+                        showRoute={true}
+                    />
+                    </div>  
                     <div className="quest-info">
                       <div>
                         Completed:{" "}
