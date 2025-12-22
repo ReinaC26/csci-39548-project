@@ -218,6 +218,48 @@ function ProfilePage() {
     }
   };
 
+  const buildQuestURL = (userQuests) => {
+    const questData = {
+      startLocation: userQuests.quest.startLocation,
+      endLocation: userQuests.quest.endLocation,
+      distance: userQuests.quest.distance,
+      duration: userQuests.quest.duration,
+      description: userQuests.quest.description,
+      questGoal: userQuests.quest.questGoal,
+      completed: true,
+      sender: user?.username
+    };
+  
+    const encoded = encodeURIComponent(
+      btoa(JSON.stringify(questData))
+    );
+  
+    return `${window.location.origin}/sharedquest?data=${encoded}`;
+  };
+  
+  const handleShare = async (quest) => {
+    const share_data = {
+        title: `Check out ${user?.username}'s Quest!`,
+        text: `Check out ${user?.username}'s Quest!`,
+        url:  buildQuestURL(quest)
+    };
+    if (navigator.share) {
+        try {
+            await navigator.share(share_data);
+            console.log("Quest shared!");
+        } catch (error) {
+            console.log("Quest share failed :(");
+        }
+    }
+    else {
+        try {
+            await navigator.clipboard.writeText(share_data.url);
+            console.log("Quest link copied to clipboard");
+        } catch (error) {
+            console.log("Failed to copy quest link :(");
+        }
+    }
+}
   if (loading) {
     return (
       <div className="profile-page">
@@ -552,7 +594,7 @@ function ProfilePage() {
                         {new Date(userQuest.completedAt).toLocaleDateString()}
                       </div>
                       <div>Distance: {userQuest.quest?.distance || "N/A"}</div>
-                      <button className="share-quest-btn">
+                      <button className="share-quest-btn" onClick={() =>handleShare(userQuest)}>
                         Share Quest <IoMdShare />{" "}
                       </button>
                     </div>
