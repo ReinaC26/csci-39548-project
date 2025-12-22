@@ -218,30 +218,33 @@ function ProfilePage() {
     }
   };
 
-  const buildQuestURL = (userQuests) => {
-    const questData = {
-      startLocation: userQuests.quest.startLocation,
-      endLocation: userQuests.quest.endLocation,
-      distance: userQuests.quest.distance,
-      duration: userQuests.quest.duration,
-      description: userQuests.quest.description,
-      questGoal: userQuests.quest.questGoal,
-      completed: true,
-      sender: user?.username
-    };
-  
-    const encoded = encodeURIComponent(
-      btoa(JSON.stringify(questData))
-    );
-  
-    return `${window.location.origin}/sharedquest?data=${encoded}`;
-  };
+  const encodeQuest = (data) => { // encode quest helper
+    return btoa(
+          JSON.stringify(data)
+        )
+          .replace(/\+/g, "-")
+          .replace(/\//g, "_")
+          .replace(/=+$/, "");
+      };
   
   const handleShare = async (quest) => {
-    const share_data = {
+    const questData = {
+        startLocation: quest.quest.startLocation,
+        endLocation: quest.quest.endLocation,
+        distance: quest.quest.distance,
+        duration: quest.quest.duration,
+        description: quest.quest.description,
+        questGoal: quest.quest.questGoal,
+        completed: true,
+        sender: user?.username
+      };
+     
+      const encoded = encodeQuest(questData);  //encode quest for link
+    
+      const share_data = {
         title: `Check out ${user?.username}'s Quest!`,
         text: `Check out ${user?.username}'s Quest!`,
-        url:  buildQuestURL(quest)
+        url:  `${window.location.origin}/sharedquest?data=${encoded}`
     };
     if (navigator.share) {
         try {
