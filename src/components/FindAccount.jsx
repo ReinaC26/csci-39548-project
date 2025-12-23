@@ -13,7 +13,7 @@ function FindAccount() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Account found! You can now reset your password (or next steps).");
+        alert("Account found!");
       } else {
         alert(data.message || "Account not found.");
       }
