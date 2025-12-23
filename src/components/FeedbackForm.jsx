@@ -33,7 +33,7 @@ function FeedbackForm({ isOpen, onClose, userId, questId, onSubmitSuccess }) {
 
         setIsSubmitting(true);
         try {
-            const response = await fetch('http://localhost:5002/api/feedback', {
+            const response = await fetch('https://csci-39548-project.onrender.com/api/feedback', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

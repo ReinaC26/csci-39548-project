@@ -48,7 +48,7 @@ function ProfilePage() {
       },
     };
 
-    const response = await fetch(`http://localhost:5002${url}`, {
+    const response = await fetch(`https://csci-39548-project.onrender.com${url}`, {
       ...defaultOptions,
       ...options,
       headers: { ...defaultOptions.headers, ...options.headers },
@@ -197,7 +197,7 @@ function ProfilePage() {
       const formData = new FormData();
       formData.append("avatar", file);
       const token = getToken();
-      const response = await fetch("http://localhost:5002/api/users/avatar", {
+      const response = await fetch("https://csci-39548-project.onrender.com/api/users/avatar", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -318,7 +318,7 @@ function ProfilePage() {
             <div className="profile-avatar">
               {user?.avatar ? (
                 <img
-                  src={`http://localhost:5002${user.avatar}`}
+                  src={`https://csci-39548-project.onrender.com${user.avatar}`}
                   alt="Profile Avatar"
                   className="avatar-temp"
                   style={{

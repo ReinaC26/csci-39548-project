@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const API_BASE_URL = "http://localhost:5002";
+const API_BASE_URL = "https://csci-39548-project.onrender.com";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
