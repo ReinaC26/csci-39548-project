@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Login.css";
 import SignupForm from "./SignupForm";
 
@@ -15,9 +16,9 @@ function Signup() {
         <SignupForm />
         <hr className="divider" />
 
-        <a href="/login" className="create-btn">
+        <Link to="/login" className="create-btn">
           Back to Login
-        </a>
+        </Link>
       </div>
     </div>
   );
