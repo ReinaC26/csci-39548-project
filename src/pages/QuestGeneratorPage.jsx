@@ -88,7 +88,7 @@ function QuestGeneratorPage({ initialQuest = null, readOnly = false, sender = nu
                     description
                 };
 
-            const response = await fetch('http://localhost:5002/api/quests', {
+            const response = await fetch('https://csci-39548-project.onrender.com/api/quests', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody),
@@ -119,7 +119,7 @@ function QuestGeneratorPage({ initialQuest = null, readOnly = false, sender = nu
                 setShowFeedbackForm(true); // show feedback anyways
                 return;
             }
-            const response = await fetch(`http://localhost:5002/api/users/quests/${generatedQuest._id}/complete`, {
+            const response = await fetch(`https://csci-39548-project.onrender.com/api/users/quests/${generatedQuest._id}/complete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -8,7 +8,9 @@ const app = express();
 const PORT = process.env.PORT || 5002;
 
 // Only requests from this address are accepted
-const allowedOrigins = process.env.CLIENT_URL.split(",");
+const allowedOrigins = process.env.CLIENT_URL 
+  ? process.env.CLIENT_URL.split(",").map(url => url.trim()) 
+  : [];
 
 // MIDDLEWARE
 app.use(
@@ -17,14 +19,16 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error(`Blocked by CORS: ${origin}`); 
         callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Increase payload size limit
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // MONGODB.
 mongoose
@@ -37,10 +41,6 @@ mongoose
 app.get("/", (req, res) => {
   res.json({ message: "WE HAVE A BACKEND FOLKS!!!!!!!!!" });
 });
-
-// Increase payload size limit
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // API ROUTES TBD
 app.use("/api/auth", require("./routes/auth"));
