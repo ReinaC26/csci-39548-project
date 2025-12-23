@@ -321,23 +321,37 @@ router.post("/friends/add", authenticateToken, async (req, res) => {
     const { friendId } = req.body;
 
     if (!friendId) {
-      return res.status(400).json({ success: false, message: "friendId is required" });
+      return res.status(400).json({ 
+        success: false, 
+        message: "friendId is required" 
+      });
     }
 
     if (String(friendId) === String(req.userId)) {
-      return res.status(400).json({ success: false, message: "You cannot add yourself" });
-    }
-
-    const friendUser = await User.findById(friendId);
-    if (!friendUser) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res.status(400).json({ 
+        success: false, 
+        message: "You cannot add yourself" 
+      });
     }
 
     const meDoc = await User.findById(req.userId);
-    const alreadyFriend = meDoc.friends?.some((id) => String(id) === String(friendId));
-    
+    if (!meDoc) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Your account was not found" 
+      });
+    }
+
+    if (!meDoc.friends) {
+      meDoc.friends = [];
+    }
+
+    const alreadyFriend = meDoc.friends.some((id) => String(id) === String(friendId));
     if (alreadyFriend) {
-      return res.status(409).json({ success: false, message: "Already added as a friend" });
+      return res.status(409).json({ 
+        success: false, 
+        message: "Already added as a friend" 
+      });
     }
 
     await User.findByIdAndUpdate(req.userId, { 
@@ -355,8 +369,11 @@ router.post("/friends/add", authenticateToken, async (req, res) => {
       friends: updatedMe.friends,
     });
   } catch (error) {
-    console.error("Add Friend Error:", error);
-    return res.status(500).json({ success: false, message: "Server error" });
+    console.error("Add friend error:", error); 
+    return res.status(500).json({ 
+      success: false, 
+      message: "Server error: " + error.message 
+    });
   }
 });
 

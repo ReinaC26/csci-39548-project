@@ -376,6 +376,16 @@
     border-right: 10px solid #DCE7EB;
 }
 
+.close-button {
+    position: absolute;
+    bottom: 8px;
+    right: 0.5px;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
 .requests-header {
     display: flex;
     justify-content: center;
