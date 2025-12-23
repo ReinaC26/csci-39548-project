@@ -19,6 +19,8 @@ function ProfilePage() {
   const [avatarFile, setAvatarFile] = useState(null);
   const [isEditingAvatar, setEditingAvatar] = useState(false);
   const fileInputRef = useRef(null);
+  const [showRoute, setShowRoute] = useState(true);
+
 
 
   // notifications & friend reqs
@@ -592,11 +594,11 @@ function ProfilePage() {
                   <div key={userQuest._id} className="quest-card">
                     <div className="quest-map">
                       <Map
-                        width="150px"
+                        width="300px"
                         height="100px"
-                        startLocation={userQuest.startLocation}
-                        endLocation={userQuest.endLocation}
-                        showRoute={true}
+                        startLocation={userQuest.quest?.startLocation}
+                        endLocation={userQuest.quest?.endLocation}
+                        showRoute={showRoute}
                     />
                     </div>  
                     <div className="quest-info">
