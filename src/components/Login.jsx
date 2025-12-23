@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Login.css";
 import LoginForm from "./LoginForm";
 import FindAccount from "./FindAccount";
 
 function Login() {
-  const [isFindMode, setIsFindMode] = useState("");
+  const [isFindMode, setIsFindMode] = useState(false); 
+
   const bgStyle = {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${process.env.PUBLIC_URL}/LoginBackground.png)`,
   };
@@ -22,11 +24,12 @@ function Login() {
         >
           {isFindMode ? "Back to Login" : "Find Account"}
         </button>
+        
         <hr className="divider" />
 
-        <a href="/signup" className="create-btn">
+        <Link to="/signup" className="create-btn">
           Create new account
-        </a>
+        </Link>
       </div>
     </div>
   );

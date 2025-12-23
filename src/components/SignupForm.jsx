@@ -23,7 +23,7 @@ function SignupForm() {
     setIsMatch(password === confirm);
   }, [password, confirm]);
 
-  // Sin-up form Submit
+  // Sign-up form Submit
   const handleSubmit = async (e) => {
     // prevent collison with previous log
     e.preventDefault();
