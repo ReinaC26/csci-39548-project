@@ -123,11 +123,14 @@
 }
 
 .left-title.centered {
-  position: absolute;
-  top: 35%;
-  left: 27%;
-  transform: translate(-50%, -50%);
-}
+    position: relative; 
+    top: 0;
+    left: 0;
+    transform: none;
+    margin-top: 25vh; 
+    margin-bottom: 1.5rem; 
+    z-index: 10;
+  }
 
 /* Random Mode Display */
 .random-mode {
@@ -155,10 +158,14 @@
 }
 
 .random-mode.centered {
-  position: static;
-  transform: none;
-  animation: scaleIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 0 auto;
+    display: flex; 
+    animation: scaleIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
 
 @keyframes scaleIn {
   from {
@@ -467,9 +474,12 @@
 }
 
 .quest-create-btn.centered {
-  margin-left: 15rem;
-  margin-top: 21rem;
-}
+    position: relative;
+    margin: 3rem auto 0 auto; 
+    top: 0;
+    left: 0;
+    transform: none;
+  }
 
 /* Right Side */
 .right-title {
@@ -717,6 +727,14 @@
     margin: 0;
     margin-bottom: 1rem;
   }
+  .left-title.centered {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 4rem auto 1rem auto !important; 
+  }
+
   .random-mode {
     width: 90%;
     max-width: 350px;
@@ -730,6 +748,10 @@
     white-space: normal;
   }
 
+  .random-mode.centered {
+    position: relative;
+  }
+
   .customize-slider-container,
   .start-location-input-box,
   .end-location-input-box,
@@ -739,7 +761,14 @@
     margin-right: auto;
   }
 
-  .quest-create-btn,
+  .quest-create-btn.centered {
+    margin: 2rem auto !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
+  
   .quest-complete-btn,
   .regenerate-btn {
     margin-left: auto;
@@ -762,6 +791,13 @@
     margin: 0;
     margin-bottom: 1rem;
   }
+  .left-title.centered {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 4rem auto 1rem auto !important; 
+  }
 
   .customize-slider-container,
   .start-location-input-box,
@@ -778,6 +814,9 @@
     padding: 0.5rem;
     gap: 0.3rem;
   }
+  .random-mode.centered {
+    position: relative;
+  }
 
   .random-mode .bold-text,
   .random-mode .regular-text {
@@ -786,7 +825,13 @@
     flex-direction: column;
   }
 
-  .quest-create-btn,
+.quest-create-btn.centered {
+    margin: 2rem auto !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
   .quest-complete-btn,
   .regenerate-btn {
     margin-left: auto;
