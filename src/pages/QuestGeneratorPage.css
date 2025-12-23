@@ -516,6 +516,7 @@
   font-family: "Kode Mono", monospace;
   color: white;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  margin-right: auto;
 }
 
 .location-icon-container {
@@ -538,11 +539,13 @@
   background: linear-gradient(135deg, #0b617c 0%, #095570 100%);
   color: white;
   height: 40px;
-  width: 170px;
+  width: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  margin-left: 7rem;
+
   font-family: "Kode Mono", monospace;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -579,7 +582,9 @@
   background: linear-gradient(135deg, #78a2b0 0%, #68929f 100%);
   color: white;
   height: 40px;
-  width: 150px;
+  width: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
