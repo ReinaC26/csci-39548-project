@@ -228,11 +228,13 @@ function ProfilePage() {
       };
      
       const encoded = encodeQuest(questData);  //encode quest for link
+
+      const shareUrl = `${window.location.origin}/sharedquest?data=${encoded}`;
     
       const share_data = {
         title: `Check out ${user?.username}'s Quest!`,
         text: `Check out ${user?.username}'s Quest!`,
-        url:  `/sharedquest?data=${encoded}`
+        url: shareUrl,
     };
     if (navigator.share) {
         try {
