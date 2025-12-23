@@ -257,20 +257,60 @@
     pointer-events: none;
 }
 
-/* Mobile */
+/*Media Queries*/
 @media (max-width: 768px) {
     .typewriter-text {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
-    
+
     .page-content {
-        margin-left: 5vw;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        margin-left: 4vw;
+        margin-right: 4vw;
     }
     
     .page-button {
-        margin-left: 5vw;
-        font-size: 1.2rem;
-        padding: 1rem 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+    }
+
+    .page-button:hover {
+        transform: scale(1.1);
+    }
+}
+
+@media (max-width: 480px) {
+    .typewriter-container {
+        margin-top: 30vh;
+        height: auto;
+        padding: 0 1rem;
+        text-align: center;
+    }
+
+    .typewriter-text {
+        font-size: 1.25rem;
+    }
+
+    .page-content {
+        font-size: 1.1rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+        padding: 1.5rem 0;
+        text-align: center;
+    }
+
+    .page-button {
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .page-button:hover {
+        transform: scale(1.05);
     }
 }

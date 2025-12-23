@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
 import "./ProfilePage.css";
+import Map from '../components/Map';
 
 // icons ...
 import { FiEdit3, FiChevronDown } from "react-icons/fi";
@@ -18,6 +19,7 @@ function ProfilePage() {
   const [avatarFile, setAvatarFile] = useState(null);
   const [isEditingAvatar, setEditingAvatar] = useState(false);
   const fileInputRef = useRef(null);
+
 
   // notifications & friend reqs
   const [showRequests, setShowRequests] = useState(false);
@@ -218,6 +220,51 @@ function ProfilePage() {
     }
   };
 
+  const encodeQuest = (data) => { // encode quest helper
+    return btoa(
+          JSON.stringify(data)
+        )
+          .replace(/\+/g, "-")
+          .replace(/\//g, "_")
+          .replace(/=+$/, "");
+      };
+  
+  const handleShare = async (quest) => {
+    const questData = {
+        startLocation: quest.quest.startLocation,
+        endLocation: quest.quest.endLocation,
+        distance: quest.quest.distance,
+        duration: quest.quest.duration,
+        description: quest.quest.description,
+        questGoal: quest.quest.questGoal,
+        completed: true,
+        sender: user?.username
+      };
+     
+      const encoded = encodeQuest(questData);  //encode quest for link
+    
+      const share_data = {
+        title: `Check out ${user?.username}'s Quest!`,
+        text: `Check out ${user?.username}'s Quest!`,
+        url:  `${window.location.origin}/sharedquest?data=${encoded}`
+    };
+    if (navigator.share) {
+        try {
+            await navigator.share(share_data);
+            console.log("Quest shared!");
+        } catch (error) {
+            console.log("Quest share failed :(");
+        }
+    }
+    else {
+        try {
+            await navigator.clipboard.writeText(share_data.url);
+            console.log("Quest link copied to clipboard");
+        } catch (error) {
+            console.log("Failed to copy quest link :(");
+        }
+    }
+}
   if (loading) {
     return (
       <div className="profile-page">
@@ -544,15 +591,21 @@ function ProfilePage() {
                 userQuests.map((userQuest) => (
                   <div key={userQuest._id} className="quest-card">
                     <div className="quest-map">
-                      <div className="map-temp">map</div>
-                    </div>
+                      <Map
+                        width="150px"
+                        height="100px"
+                        startLocation={userQuest.startLocation}
+                        endLocation={userQuest.endLocation}
+                        showRoute={true}
+                    />
+                    </div>  
                     <div className="quest-info">
                       <div>
                         Completed:{" "}
                         {new Date(userQuest.completedAt).toLocaleDateString()}
                       </div>
                       <div>Distance: {userQuest.quest?.distance || "N/A"}</div>
-                      <button className="share-quest-btn">
+                      <button className="share-quest-btn" onClick={() =>handleShare(userQuest)}>
                         Share Quest <IoMdShare />{" "}
                       </button>
                     </div>
