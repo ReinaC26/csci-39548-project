@@ -20,7 +20,12 @@ function Login() {
 
         <button
           className="toggle-btn"
-          onClick={() => setIsFindMode(!isFindMode)}
+          type="button" 
+          onClick={(e) => {
+            e.preventDefault(); // Stop page refresh
+            e.stopPropagation(); // Stop event bubbling
+            setIsFindMode(!isFindMode);
+          }}
         >
           {isFindMode ? "Back to Login" : "Find Account"}
         </button>
