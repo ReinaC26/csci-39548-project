@@ -248,7 +248,7 @@ function ProfilePage() {
       const share_data = {
         title: `Check out ${user?.username}'s Quest!`,
         text: `Check out ${user?.username}'s Quest!`,
-        url:  `${window.location.origin}/sharedquest?data=${encoded}`
+        url:  `/sharedquest?data=${encoded}`
     };
     if (navigator.share) {
         try {
