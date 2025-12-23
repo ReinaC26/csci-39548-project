@@ -416,7 +416,7 @@
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  margin-left: 15rem;
+  margin-left: auto;
   margin-top: 0.8rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
