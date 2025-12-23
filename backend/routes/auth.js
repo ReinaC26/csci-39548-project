@@ -13,9 +13,9 @@ const generateToken = (userId) => {
 };
 
 
-// POST /api/auth/register
+// POST /api/auth/signup
 // user sign up
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
@@ -57,6 +57,24 @@ router.post('/register', async (req, res) => {
         }
 
         res.status(500).json({ success: false, message: "Server error during registration"});
+    }
+});
+
+// GET /api/auth/find-account
+router.get('/find-account', async (req, res) => {
+    try {
+        const { username, email } = req.query;
+
+        // Look for a user that matches both username and email
+        const user = await User.findOne({ username, email });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "No user found with those details." });
+        }
+
+        res.json({ success: true, message: "Account verified." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error" });
     }
 });
 
