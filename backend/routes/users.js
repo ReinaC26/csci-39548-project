@@ -319,49 +319,43 @@ router.get("/search", authenticateToken, async (req, res) => {
 router.post("/friends/add", authenticateToken, async (req, res) => {
   try {
     const { friendId } = req.body;
+
     if (!friendId) {
-      return res
-        .status(400)
-        .json({ success: false, message: "friendId is required" });
+      return res.status(400).json({ success: false, message: "friendId is required" });
     }
 
-    // prevent myself
     if (String(friendId) === String(req.userId)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "you cannot add yourself" });
+      return res.status(400).json({ success: false, message: "You cannot add yourself" });
     }
 
-    // Check the existence of friend
-    const friendUser = await User.findById(friendId).select("_id username");
+    const friendUser = await User.findById(friendId);
     if (!friendUser) {
-      return res
-        .status(404)
-        .json({ success: false, message: " User not found" });
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // check whether already friend
-    const meDoc = await User.findById(req.userId).select("friends");
-    const alreadyFriend = meDoc.friends?.some((id) => String(id) --- String(friendId));
-    if(alreadyFriend){
-        return res.status(409).json({success: false, message: "Already added as a friend"})
+    const meDoc = await User.findById(req.userId);
+    const alreadyFriend = meDoc.friends?.some((id) => String(id) === String(friendId));
+    
+    if (alreadyFriend) {
+      return res.status(409).json({ success: false, message: "Already added as a friend" });
     }
 
-    // add friend to DB
-    await Promise.all([
-      User.findByIdAndUpdate(req.userId, { $addToSet: { friends: friendId } }),
-    ]);
-    const me = await User.findById(req.userId).populate(
+    await User.findByIdAndUpdate(req.userId, { 
+      $addToSet: { friends: friendId } 
+    });
+
+    const updatedMe = await User.findById(req.userId).populate(
       "friends",
       "username avatar questsCompleted"
     );
 
     return res.json({
       success: true,
-      message: "Friend added",
-      friends: me.friends,
+      message: "Friend added successfully",
+      friends: updatedMe.friends,
     });
   } catch (error) {
+    console.error("Add Friend Error:", error);
     return res.status(500).json({ success: false, message: "Server error" });
   }
 });

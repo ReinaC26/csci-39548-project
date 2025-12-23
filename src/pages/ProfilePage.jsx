@@ -21,11 +21,9 @@ function ProfilePage() {
   const fileInputRef = useRef(null);
   const [showRoute, setShowRoute] = useState(true);
 
-
-
   // notifications & friend reqs
   const [showRequests, setShowRequests] = useState(false);
-  const [activeRequestTab, setActiveRequestTab] = useState("received");
+  const [activeRequestTab, setActiveRequestTab] = useState("sent");
   const [receivedRequests, setReceivedRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
 
@@ -90,20 +88,6 @@ function ProfilePage() {
       setUserQuests(response.quests || []);
     } catch (error) {
       console.error("Failed to load quests: ", error);
-    }
-  };
-
-  // api loader function for fwendz :)
-  const loadFriendRequests = async () => {
-    try {
-      const [receivedRes, sentRes] = await Promise.all([
-        apiRequest("/api/friends/request/received"),
-        apiRequest("/api/friends/request/sent"),
-      ]);
-      setReceivedRequests(receivedRes.requests || []);
-      setSentRequests(sentRes.requests || []);
-    } catch (error) {
-      console.error("Failed to load friend requests, error: ", error);
     }
   };
 
@@ -248,7 +232,7 @@ function ProfilePage() {
       const share_data = {
         title: `Check out ${user?.username}'s Quest!`,
         text: `Check out ${user?.username}'s Quest!`,
-        url:  `${window.location.origin}/sharedquest?data=${encoded}`
+        url:  `/sharedquest?data=${encoded}`
     };
     if (navigator.share) {
         try {
@@ -377,22 +361,17 @@ function ProfilePage() {
               <span>Friends</span>
               <span
                 className="notification-bell"
-                onClick={() => {
-                  setShowRequests((prev) => !prev);
-                  if (!showRequests) {
-                    loadFriendRequests();
-                  }
-                }}
+                onClick={() => setShowRequests((prev) => !prev)}
               >
-                {" "}
-                <IoIosNotificationsOutline />{" "}
+                <IoIosNotificationsOutline />
               </span>
             </div>
+
             {showRequests && (
               <div className="friend-requests-popup">
                 {/* HEADER */}
                 <div className="requests-header">
-                  <h4>Friend Requests</h4>
+                  <h4>Find & Add Friends</h4>
                   <button
                     className="close-button"
                     onClick={() => setShowRequests(false)}
@@ -400,104 +379,72 @@ function ProfilePage() {
                     ×
                   </button>
                 </div>
-                <div className="requests-tabs">
-                  <span
-                    className={activeRequestTab === "sent" ? "active" : ""}
-                    onClick={() => setActiveRequestTab("sent")}
-                  >
-                    Sent(Search)
-                  </span>
-                  <span>|</span>
-                  <span
-                    className={activeRequestTab === "received" ? "active" : ""}
-                    onClick={() => setActiveRequestTab("received")}
-                  >
-                    Received
-                  </span>
-                </div>
+
                 {/* CONTENT */}
                 <div className="requests-content">
-                  {activeRequestTab === "received" && (
-                    <>
-                      {receivedRequests.length === 0 ? (
-                        <div className="empty-state">No received requests</div>
-                      ) : (
-                        receivedRequests.map((req) => (
-                          <div key={req._id} className="request-item">
-                            <CgProfile />
-                            <div className="request-info">
-                              <div>{req.from.username}</div>
-                              <small>Sent you a friend request</small>
-                            </div>
-                            <div className="request-actions">
-                              <button
-                                onClick={() => console.log("accept", req._id)}
-                              >
-                                ✔
-                              </button>
-                              <button
-                                onClick={() => console.log("decline", req._id)}
-                              >
-                                ✖
-                              </button>
-                            </div>
-                          </div>
-                        ))
-                      )}
-                    </>
-                  )}
+                  {/* Search Input */}
+                  <input
+                    type="text"
+                    placeholder="Search users..."
+                    value={searchQuery}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setSearchQuery(value);
+                      searchUsers(value);
+                    }}
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      borderRadius: "8px",
+                      border: "1px solid #ccc",
+                      marginBottom: "0.8rem",
+                      fontFamily: "Kode Mono, monospace",
+                      boxSizing: "border-box"
+                    }}
+                  />
 
-                  {/* Search friends */}
-                  {activeRequestTab === "sent" && (
-                    <>
-                      {/* 🔍 Search Input */}
-                      <input
-                        type="text"
-                        placeholder="Search users..."
-                        value={searchQuery}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          setSearchQuery(value);
-                          searchUsers(value);
-                        }}
-                        style={{
-                          width: "100%",
-                          padding: "0.5rem",
-                          borderRadius: "8px",
-                          border: "1px solid #ccc",
-                          marginBottom: "0.8rem",
-                          fontFamily: "Kode Mono, monospace",
-                        }}
-                      />
-
-                      {searchResults.map((user) => (
-                        <div key={user._id} className="request-item">
-                          <CgProfile />
-                          <div className="request-info">
-                            <div>{user.username}</div>
-                          </div>
-
-                          <div className="request-actions">
-                            <button onClick={() => addFriend(user._id)}>
-                              +
-                            </button>
-                          </div>
+                  {/* Search Results */}
+                  {searchResults.length > 0 ? (
+                    searchResults.map((result) => (
+                      <div key={result._id} className="request-item">
+                        <CgProfile />
+                        <div className="request-info">
+                          <div>{result.username}</div>
                         </div>
-                      ))}
-                    </>
+                        <div className="request-actions">
+                          <button onClick={() => addFriend(result._id)}>
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    searchQuery && <div className="empty-state">No users found</div>
                   )}
                 </div>
               </div>
             )}
-            {friends.map((friend) => (
-              <div key={friend._id} className="friend-item">
-                <div className="friend-avatar">
-                  {" "}
-                  <CgProfile />{" "}
+
+            {/* Actual Friends List */}
+            <div className="friends-list-scroll">
+              {friends.map((friend) => (
+                <div key={friend._id} className="friend-item">
+                  <div className="friend-avatar">
+                    {friend.avatar ? (
+                      <img 
+                        src={`https://csci-39548-project.onrender.com${friend.avatar}`} 
+                        alt="" 
+                        style={{ width: '100%', height: '100%', borderRadius: '50%' }}
+                      />
+                    ) : (
+                      <CgProfile />
+                    )}
+                  </div>
+                  <span>{friend.username}</span>
                 </div>
-                <span>{friend.username}</span>
-              </div>
-            ))}
+              ))}
+            </div>
+
             {friends.length === 0 && (
               <div
                 style={{
@@ -511,7 +458,6 @@ function ProfilePage() {
             )}
           </div>
         </div>
-
         {/* right side */}
         <div className="main-content">
           <div className="quests-header">
